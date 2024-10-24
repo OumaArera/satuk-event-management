@@ -42,33 +42,45 @@ const MyTickets = () => {
     fetchTickets();
   }, []);
 
-  // Function to generate a PDF for each paid ticket
+  // Updated generatePDF function with improved rendering
   const generatePDF = (ticket) => {
     const doc = new jsPDF();
 
+    // Add logos to the header with proper dimensions
+    const satukLogoWidth = 50; // Width of the satuk logo
+    const satukLogoHeight = 20; // Height of the satuk logo
+    const tukLogoWidth = 50; // Width of the tuk logo
+    const tukLogoHeight = 20; // Height of the tuk logo
+    
     // Add logos to the header
-    doc.addImage(satukLogo, 'PNG', 10, 10, 50, 20);
-    doc.addImage(tukLogo, 'PNG', 150, 10, 50, 20);
+    doc.addImage(satukLogo, 'PNG', 10, 10, satukLogoWidth, satukLogoHeight);
+    doc.addImage(tukLogo, 'PNG', 150, 10, tukLogoWidth, tukLogoHeight);
 
-    // Ticket details
+    // Ticket details with adjusted styles
+    doc.setFontSize(24);
+    doc.setFont('bold');
+    doc.text(`Ticket Number: ${ticket.ticketNumber}`, doc.internal.pageSize.getWidth() / 2, 60, null, null, 'center');
+    
     doc.setFontSize(18);
-    doc.text('SATUK AWARDS 2024 - TICKET', 60, 50);
+    doc.text(`Type: ${ticket.type === 'VIP' ? 'VIP' : 'REGULAR'}`, doc.internal.pageSize.getWidth() / 2, 80, null, null, 'center');
 
     doc.setFontSize(12);
-    doc.text(`Ticket Number: ${ticket.ticketNumber}`, 20, 70);
-    doc.text(`Name: ${ticket.name}`, 20, 80);
-    doc.text(`Email: ${ticket.email}`, 20, 90);
-    doc.text(`Phone: ${ticket.phone}`, 20, 100);
-    doc.text(`Type: ${ticket.type === 'VIP' ? 'VIP' : 'REGULAR'}`, 20, 110);
-    doc.text(`Payment Date: ${new Date(ticket.createdAt).toLocaleDateString()}`, 20, 120);
+    doc.setFont('normal');
+    doc.text(`Name: ${ticket.name}`, doc.internal.pageSize.getWidth() / 2, 100, null, null, 'center');
+    doc.text(`Email: ${ticket.email}`, doc.internal.pageSize.getWidth() / 2, 110, null, null, 'center');
+    doc.text(`Phone: ${ticket.phone}`, doc.internal.pageSize.getWidth() / 2, 120, null, null, 'center');
+    doc.text(`Payment Date: ${new Date(ticket.createdAt).toLocaleDateString()}`, doc.internal.pageSize.getWidth() / 2, 130, null, null, 'center');
 
-    // Add barcode at the bottom
-    doc.text('Barcode:', 20, 140);
+    // Add barcode at the bottom of the page
+    const barcodeWidth = 80; // Adjust the width of the barcode
+    const barcodeHeight = 20; // Adjust the height of the barcode
+    const barcodeX = (doc.internal.pageSize.getWidth() - barcodeWidth) / 2; // Center the barcode
+
     doc.barcode(ticket.ticketNumber, {
-      x: 20,
+      x: barcodeX,
       y: 145,
-      width: 100,
-      height: 30,
+      width: barcodeWidth,
+      height: barcodeHeight,
     });
 
     // Save the PDF
