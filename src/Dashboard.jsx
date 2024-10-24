@@ -110,9 +110,16 @@ const Dashboard = () => {
       const data = await response.json();
 
       if (data.success) {
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          transactionCode: '',
+        })
         setSuccessMessage(
           'Thank you! Our team will confirm the ticket shortly. You will be able to download the receipt.'
         );
+        setTimeout(() => setSuccessMessage(""), 10000);
         setErrorMessage('');
       } else {
         setErrorMessage(data.message || 'Failed to submit ticket details.');
