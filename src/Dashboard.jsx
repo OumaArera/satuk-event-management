@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import backgroundImage from './images/background.jpg';
+import { NavLink, useNavigate } from 'react-router-dom';
 import AuthContext from './AuthContext';
 import MyTickets from './MyTickets';
 
@@ -7,7 +8,7 @@ const Dashboard = () => {
   const { auth, setAuth } = useContext(AuthContext); 
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [ticketType, setTicketType] = useState('');
-  const [activeTab, setActiveTab] = useState('buyTickets'); // State to switch between components
+  const [activeTab, setActiveTab] = useState('buyTickets'); 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,6 +20,7 @@ const Dashboard = () => {
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false);
+  const history = useNavigate(); 
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('accessToken');
