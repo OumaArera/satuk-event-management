@@ -16,6 +16,16 @@ const Dashboard = () => {
   });
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem('accessToken');
+    const userData = localStorage.getItem('userData');
+    if (storedAccessToken) setToken(JSON.parse(storedAccessToken));
+    if (userData) setUserId(JSON.parse(userData).id);
+  }, []);
+
 
   let inactivityTimeout;
 
@@ -85,7 +95,7 @@ const Dashboard = () => {
     try {
       const response = await fetch('https://satuk.onrender.com/users/ticket', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, },
         body: JSON.stringify({
           ...formData,
           type: ticketType,
