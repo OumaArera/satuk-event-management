@@ -105,8 +105,6 @@ const MyTickets = () => {
     doc.save(`ticket-${ticket.ticketNumber}.pdf`);
   };
   
-  
-  
   // Function to generate a unique code
   const generateUniqueCode = () => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -117,7 +115,6 @@ const MyTickets = () => {
     }
     return result;
   };
-  
 
   if (loading) {
     return <p>Loading...</p>;
@@ -131,7 +128,7 @@ const MyTickets = () => {
   const paidTickets = tickets.filter(ticket => ticket.status === 'paid');
 
   return (
-    <div className="container mx-auto my-8">
+    <div className="container mx-auto my-8 px-4">
       <h1 className="text-3xl font-bold text-center mb-8">My Tickets</h1>
 
       <div className="paid-tickets mb-8">
@@ -140,12 +137,12 @@ const MyTickets = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {paidTickets.map(ticket => (
               <div key={ticket.id} className="bg-white shadow-md p-4 rounded-lg">
-                <p> {ticket.ticketNumber}</p>
-                <p> {ticket.name}</p>
-                <p> {ticket.email}</p>
-                <p> {ticket.type === 'VIP' ? 'VIP' : 'REGULAR'}</p>
-                <p> {ticket.status}</p>
-                <p> {new Date(ticket.createdAt).toLocaleDateString()}</p>
+                <p>{ticket.ticketNumber}</p>
+                <p>{ticket.name}</p>
+                <p>{ticket.email}</p>
+                <p>{ticket.type === 'VIP' ? 'VIP' : 'REGULAR'}</p>
+                <p>{ticket.status}</p>
+                <p>{new Date(ticket.createdAt).toLocaleDateString()}</p>
 
                 <button
                   className="mt-4 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition"
@@ -163,32 +160,34 @@ const MyTickets = () => {
 
       <div className="pending-tickets">
         <h2 className="text-2xl font-bold mb-4">Pending Tickets</h2>
-        <table className="min-w-full bg-white shadow-md rounded-lg">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border">Ticket Number</th>
-              <th className="py-2 px-4 border">Name</th>
-              <th className="py-2 px-4 border">Email</th>
-              <th className="py-2 px-4 border">Phone</th>
-              <th className="py-2 px-4 border">Type</th>
-              <th className="py-2 px-4 border">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tickets
-              .filter(ticket => ticket.status !== 'paid')
-              .map(ticket => (
-                <tr key={ticket.id}>
-                  <td className="py-2 px-4 border">{ticket.ticketNumber}</td>
-                  <td className="py-2 px-4 border">{ticket.name}</td>
-                  <td className="py-2 px-4 border">{ticket.email}</td>
-                  <td className="py-2 px-4 border">{ticket.phone}</td>
-                  <td className="py-2 px-4 border">{ticket.type === 'VIP' ? 'VIP' : 'STANDARD'}</td>
-                  <td className="py-2 px-4 border">{ticket.status}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white shadow-md rounded-lg">
+            <thead>
+              <tr>
+                <th className="py-2 px-4 border">Ticket Number</th>
+                <th className="py-2 px-4 border">Name</th>
+                <th className="py-2 px-4 border">Email</th>
+                <th className="py-2 px-4 border">Phone</th>
+                <th className="py-2 px-4 border">Type</th>
+                <th className="py-2 px-4 border">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tickets
+                .filter(ticket => ticket.status !== 'paid')
+                .map(ticket => (
+                  <tr key={ticket.id}>
+                    <td className="py-2 px-4 border">{ticket.ticketNumber}</td>
+                    <td className="py-2 px-4 border">{ticket.name}</td>
+                    <td className="py-2 px-4 border">{ticket.email}</td>
+                    <td className="py-2 px-4 border">{ticket.phone}</td>
+                    <td className="py-2 px-4 border">{ticket.type === 'VIP' ? 'VIP' : 'STANDARD'}</td>
+                    <td className="py-2 px-4 border">{ticket.status}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
