@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { NavLink, useHistory } from 'react-router-dom'; // Import useHistory for redirection
+import { NavLink, useNavigate } from 'react-router-dom'; // Import useHistory for redirection
 import backgroundImage from './images/background.jpg';
 import AuthContext from './AuthContext';
 
 const Dashboard = () => {
   const { auth, setAuth } = useContext(AuthContext); // Adding setAuth to clear authentication on logout
-  const history = useHistory(); // For routing to home
+  const history = useNavigate(); // For routing to home
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [ticketType, setTicketType] = useState('');
   const [formData, setFormData] = useState({
@@ -111,7 +111,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem('userData'); // Clear user data
     setAuth(null); // Clear auth context
-    history.push('/'); // Redirect to home page
+    history('/'); // Redirect to home page
   };
 
   return (
