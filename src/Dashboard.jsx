@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('accessToken');
@@ -85,6 +86,8 @@ const Dashboard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!token) return;
+    setLoading(true);
     if (!validatePhone(formData.phone)) {
       setErrorMessage(
         'Invalid phone number. Must be in 07xxxxxxxx, 01xxxxxxxx, 2547xxxxxxxx, or 2541xxxxxxxx format.'
@@ -114,6 +117,8 @@ const Dashboard = () => {
       }
     } catch (err) {
       setErrorMessage('An error occurred while submitting your ticket details.');
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -250,7 +255,7 @@ const Dashboard = () => {
                       type="submit"
                       className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition"
                     >
-                      Submit
+                      {loading ? "Sending ..." : "Submit"}
                     </button>
                     <button
                       type="button"
