@@ -23,7 +23,7 @@ const Dashboard = () => {
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('accessToken');
     const userData = localStorage.getItem('userData');
-    if (storedAccessToken) setToken(JSON.parse(storedAccessToken));
+    if (storedAccessToken) setToken(storedAccessToken);
     if (userData) setUserId(JSON.parse(userData).id);
   }, []);
 
