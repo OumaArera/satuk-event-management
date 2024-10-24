@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import backgroundImage from './images/background.jpg'; // Import background image
+import backgroundImage from './images/background.jpg'; 
 import AuthContext from './AuthContext';
 
 const Dashboard = () => {
