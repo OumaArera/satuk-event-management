@@ -192,7 +192,7 @@ const Dashboard = () => {
               <p>KES 200</p>
               <button
                 className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
-                onClick={() => handleBuyClick('REGULAR')}
+                onClick={() => handleBuyClick('STANDARD')}
               >
                 Buy 
               </button>
