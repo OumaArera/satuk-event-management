@@ -98,7 +98,9 @@ const Dashboard = () => {
     try {
       const response = await fetch('https://satuk.onrender.com/users/ticket', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, },
+        headers: { 
+          'Content-Type': 'application/json', 
+          Authorization: `Bearer ${token}`, },
         body: JSON.stringify({
           ...formData,
           type: ticketType,
@@ -175,7 +177,7 @@ const Dashboard = () => {
                 className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
                 onClick={() => handleBuyClick('VIP')}
               >
-                Buy VIP Ticket
+                Buy 
               </button>
             </div>
             <div className="card bg-white shadow-lg p-6 rounded-lg flex-1">
@@ -185,7 +187,7 @@ const Dashboard = () => {
                 className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
                 onClick={() => handleBuyClick('REGULAR')}
               >
-                Buy REGULAR Ticket
+                Buy 
               </button>
             </div>
           </div>
