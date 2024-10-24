@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { NavLink } from 'react-router-dom';
-import backgroundImage from './images/background.jpg'; 
+import { NavLink, useHistory } from 'react-router-dom'; // Import useHistory for redirection
+import backgroundImage from './images/background.jpg';
 import AuthContext from './AuthContext';
 
 const Dashboard = () => {
-  const { auth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext); // Adding setAuth to clear authentication on logout
+  const history = useHistory(); // For routing to home
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [ticketType, setTicketType] = useState('');
   const [formData, setFormData] = useState({
@@ -15,6 +16,33 @@ const Dashboard = () => {
   });
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  let inactivityTimeout;
+
+  // Step 2: Implement Auto Logout After 5 Minutes of Inactivity
+  useEffect(() => {
+    // Start the timer to track user inactivity
+    resetInactivityTimeout();
+
+    // Set up event listeners for user activity
+    window.addEventListener('mousemove', resetInactivityTimeout);
+    window.addEventListener('keypress', resetInactivityTimeout);
+
+    // Clean up event listeners on component unmount
+    return () => {
+      clearTimeout(inactivityTimeout);
+      window.removeEventListener('mousemove', resetInactivityTimeout);
+      window.removeEventListener('keypress', resetInactivityTimeout);
+    };
+  }, []);
+
+  // Reset the inactivity timer
+  const resetInactivityTimeout = () => {
+    if (inactivityTimeout) clearTimeout(inactivityTimeout);
+    inactivityTimeout = setTimeout(() => {
+      handleLogout();
+    }, 300000); // 5 minutes (300,000 milliseconds)
+  };
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
@@ -79,6 +107,13 @@ const Dashboard = () => {
     }
   };
 
+  // Step 1: Handle Manual Logout
+  const handleLogout = () => {
+    localStorage.removeItem('userData'); // Clear user data
+    setAuth(null); // Clear auth context
+    history.push('/'); // Redirect to home page
+  };
+
   return (
     <div
       className="min-h-screen flex"
@@ -104,6 +139,14 @@ const Dashboard = () => {
         >
           Buy Ticket
         </NavLink>
+
+        {/* Step 1: Add Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="mt-6 py-2 px-4 bg-red-500 text-white rounded-lg text-center hover:bg-red-600 transition duration-300"
+        >
+          Logout
+        </button>
       </div>
 
       {/* Main content */}
