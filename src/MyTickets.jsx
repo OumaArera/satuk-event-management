@@ -45,17 +45,17 @@ const MyTickets = () => {
   // Updated generatePDF function with improved rendering
   const generatePDF = (ticket) => {
     const doc = new jsPDF();
-
+  
     // Add logos to the header with proper dimensions
     const satukLogoWidth = 50; // Width of the satuk logo
     const satukLogoHeight = 20; // Height of the satuk logo
     const tukLogoWidth = 50; // Width of the tuk logo
     const tukLogoHeight = 20; // Height of the tuk logo
-    
+  
     // Add logos to the header
     doc.addImage(satukLogo, 'PNG', 10, 10, satukLogoWidth, satukLogoHeight);
     doc.addImage(tukLogo, 'PNG', 150, 10, tukLogoWidth, tukLogoHeight);
-
+  
     // Ticket details with adjusted styles
     doc.setFontSize(24);
     doc.setFont('bold');
@@ -63,29 +63,46 @@ const MyTickets = () => {
     
     doc.setFontSize(18);
     doc.text(`Type: ${ticket.type === 'VIP' ? 'VIP' : 'REGULAR'}`, doc.internal.pageSize.getWidth() / 2, 80, null, null, 'center');
-
+  
     doc.setFontSize(12);
     doc.setFont('normal');
     doc.text(`Name: ${ticket.name}`, doc.internal.pageSize.getWidth() / 2, 100, null, null, 'center');
     doc.text(`Email: ${ticket.email}`, doc.internal.pageSize.getWidth() / 2, 110, null, null, 'center');
     doc.text(`Phone: ${ticket.phone}`, doc.internal.pageSize.getWidth() / 2, 120, null, null, 'center');
     doc.text(`Payment Date: ${new Date(ticket.createdAt).toLocaleDateString()}`, doc.internal.pageSize.getWidth() / 2, 130, null, null, 'center');
-
-    // Add barcode at the bottom of the page
-    const barcodeWidth = 80; // Adjust the width of the barcode
-    const barcodeHeight = 20; // Adjust the height of the barcode
-    const barcodeX = (doc.internal.pageSize.getWidth() - barcodeWidth) / 2; // Center the barcode
-
-    doc.barcode(ticket.ticketNumber, {
-      x: barcodeX,
-      y: 145,
-      width: barcodeWidth,
-      height: barcodeHeight,
-    });
-
+  
+    // Generate a unique validation code
+    const validationCode = generateUniqueCode();
+    doc.setFontSize(16);
+    doc.setFont('bold');
+    doc.text(`Validation Code: ${validationCode}`, doc.internal.pageSize.getWidth() / 2, 160, null, null, 'center');
+  
+    // Draw a decorative pattern for validation
+    doc.setDrawColor(0, 150, 136); // Set the color for the pattern
+    doc.setLineWidth(0.5);
+    for (let i = 0; i < 10; i++) {
+      const xStart = Math.random() * doc.internal.pageSize.getWidth();
+      const yStart = 180 + Math.random() * 20;
+      const xEnd = xStart + Math.random() * 40;
+      const yEnd = yStart + Math.random() * 10;
+      doc.line(xStart, yStart, xEnd, yEnd); // Draw random lines
+    }
+  
     // Save the PDF
     doc.save(`ticket-${ticket.ticketNumber}.pdf`);
   };
+  
+  // Function to generate a unique code
+  const generateUniqueCode = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 8; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+    }
+    return result;
+  };
+  
 
   if (loading) {
     return <p>Loading...</p>;
