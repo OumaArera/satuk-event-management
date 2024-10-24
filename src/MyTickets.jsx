@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-barcode';
-import satukLogo from './images/satuk_logo.png'; // Import the logos
+import satukLogo from './images/satuk_logo.png'; 
 import tukLogo from './images/tuk_logo.png';
 
 const MyTickets = () => {
