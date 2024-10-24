@@ -8,6 +8,7 @@ import Admin from './Admin';
 import Dashboard from './Dashboard';
 import { AuthProvider } from './AuthContext'; 
 import PrivateRoute from './PrivateRoute';  
+import MyTickets from './MyTickets';
 
 function App() {
   return (
@@ -34,6 +35,14 @@ function App() {
               element={
                 <PrivateRoute allowedTypes={['standard']}>
                   <Dashboard />
+                </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/my-tickets" 
+              element={
+                <PrivateRoute allowedTypes={['standard']}>
+                  <MyTickets />
                 </PrivateRoute>
               } 
             />
