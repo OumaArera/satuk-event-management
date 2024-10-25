@@ -192,5 +192,4 @@ const MyTickets = () => {
     </div>
   );
 };
-
 export default MyTickets;
