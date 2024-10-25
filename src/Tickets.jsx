@@ -65,7 +65,7 @@ const Tickets = () => {
 
   return (
     <div className="container mx-auto my-8 px-4">
-      <h1 className="text-3xl font-bold text-center mb-8">Tickets</h1>
+      {/* <h1 className="text-3xl font-bold text-center mb-8">Tickets</h1> */}
       <button onClick={downloadPDF} className="bg-blue-500 text-white px-4 py-2 rounded mb-4">
         Download PDF
       </button>

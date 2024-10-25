@@ -94,7 +94,7 @@ const Payments = () => {
                 <td className="py-2 px-4 border">{ticket.name}</td>
                 <td className="py-2 px-4 border">{ticket.email}</td>
                 <td className="py-2 px-4 border">{ticket.phone}</td>
-                <td className="py-2 px-4 border">{ticket.type}</td>
+                <td className="py-2 px-4 border">{ticket.type === 'STANDARD' ? 'REGULAR' : ticket.type}</td>
                 <td className="py-2 px-4 border">{ticket.transactionCode}</td>
                 <td className={`py-2 px-4 border ${ticket.status === 'approved' ? 'text-green-500' : ticket.status === 'declined' ? 'text-red-500' : 'text-yellow-500'}`}>
                   {ticket.status}
