@@ -53,6 +53,11 @@ const Dashboard = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleTransactionCodeChange = (e) => {
+    const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    setFormData({ ...formData, transactionCode: value });
+  };
+
   const validatePhone = (phone) => {
     const phoneRegex = /^(07|01|2547|2541)\d{8}$/;
     return phoneRegex.test(phone);
@@ -237,7 +242,7 @@ const Dashboard = () => {
                     type="text"
                     name="transactionCode"
                     value={formData.transactionCode}
-                    onChange={handleInputChange}
+                    onChange={handleTransactionCodeChange}
                     className="w-full p-2 border rounded"
                     required
                   />
