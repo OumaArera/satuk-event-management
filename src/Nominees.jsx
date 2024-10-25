@@ -77,6 +77,12 @@ const Nominees = () => {
     doc.save(`${category}.pdf`);
   };
 
+  const toTitleCase = (str) => {
+    return str
+      .toLowerCase()
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -111,7 +117,7 @@ const Nominees = () => {
                 <tbody>
                   {paginatedNominees.map((nominee, index) => (
                     <tr key={index}>
-                      <td className="py-2 px-4 border">{nominee.nomineeName}</td>
+                      <td className="py-2 px-4 border">{toTitleCase(nominee.nomineeName)}</td>
                       <td className="py-2 px-4 border">{nominee.totalVotes}</td>
                     </tr>
                   ))}
