@@ -10,32 +10,43 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [passwordValidation, setPasswordValidation] = useState({
+    minLength: false,
+    hasLowercase: false,
+    hasUppercase: false,
+    hasNumber: false,
+  });
   const navigate = useNavigate();
 
   const handleNameChange = (e) => setName(e.target.value);
   const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
-  const validatePassword = (password) => {
-    const minLength = password.length >= 6;
-    const hasLowercase = /[a-z]/.test(password);
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    return minLength && hasLowercase && hasUppercase && hasNumber;
+  // Real-time validation for each password requirement
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    
+    setPasswordValidation({
+      minLength: value.length >= 6,
+      hasLowercase: /[a-z]/.test(value),
+      hasUppercase: /[A-Z]/.test(value),
+      hasNumber: /\d/.test(value),
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validatePassword(password)) {
-      setError('Password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one number.');
+    const isPasswordValid = Object.values(passwordValidation).every(Boolean);
+    if (!isPasswordValid) {
+      setError('Please meet all password requirements before submitting.');
       return;
     }
 
-    setIsSubmitting(true); // Start form submission
-    setError(''); // Clear previous errors
+    setIsSubmitting(true);
+    setError('');
 
     try {
       const response = await fetch(SIGNUP_URL, {
@@ -47,7 +58,6 @@ const Signup = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Navigate to login page after successful signup
         navigate('/login');
       } else {
         setError(data.message || 'Signup failed.');
@@ -55,7 +65,7 @@ const Signup = () => {
     } catch (err) {
       setError('An error occurred during signup.');
     } finally {
-      setIsSubmitting(false); // End form submission
+      setIsSubmitting(false);
     }
   };
 
@@ -82,7 +92,7 @@ const Signup = () => {
               value={name}
               onChange={handleNameChange}
               required
-              disabled={isSubmitting} // Disable input during submission
+              disabled={isSubmitting}
             />
           </div>
 
@@ -94,7 +104,7 @@ const Signup = () => {
               value={email}
               onChange={handleEmailChange}
               required
-              disabled={isSubmitting} // Disable input during submission
+              disabled={isSubmitting}
             />
           </div>
 
@@ -106,8 +116,22 @@ const Signup = () => {
               value={password}
               onChange={handlePasswordChange}
               required
-              disabled={isSubmitting} // Disable input during submission
+              disabled={isSubmitting}
             />
+            <div className="mt-2 text-sm">
+              <p className={passwordValidation.minLength ? 'text-green-500' : 'text-red-500'}>
+                • At least 6 characters
+              </p>
+              <p className={passwordValidation.hasLowercase ? 'text-green-500' : 'text-red-500'}>
+                • At least 1 lowercase letter
+              </p>
+              <p className={passwordValidation.hasUppercase ? 'text-green-500' : 'text-red-500'}>
+                • At least 1 uppercase letter
+              </p>
+              <p className={passwordValidation.hasNumber ? 'text-green-500' : 'text-red-500'}>
+                • At least 1 number
+              </p>
+            </div>
           </div>
 
           <div className="mb-4 flex items-center">
@@ -117,7 +141,7 @@ const Signup = () => {
               checked={showPassword}
               onChange={toggleShowPassword}
               className="mr-2"
-              disabled={isSubmitting} // Disable checkbox during submission
+              disabled={isSubmitting}
             />
             <label htmlFor="showPassword" className="text-gray-700">Show Password</label>
           </div>
@@ -125,7 +149,7 @@ const Signup = () => {
           <button
             type="submit"
             className={`bg-blue-600 text-white py-3 px-4 rounded w-full hover:bg-blue-700 transition duration-300 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={isSubmitting} // Disable button during submission
+            disabled={isSubmitting}
           >
             {isSubmitting ? 'Signing Up...' : 'Sign Up'}
           </button>
