@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
-import satukLogo from './images/satuk_logo.png'; // Add appropriate image imports for PDF generation
+import satukLogo from './images/satuk_logo.png'; 
 
 const Nominees = () => {
   const [data, setData] = useState({});
@@ -8,7 +8,7 @@ const Nominees = () => {
   const [error, setError] = useState('');
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({});
   const [itemsPerPage] = useState(5);
 
   useEffect(() => {
@@ -29,6 +29,12 @@ const Nominees = () => {
         if (data.success) {
           setData(data.data);
           setNominators(data.nominators);
+          // Initialize pagination states for each category
+          const initialPagination = Object.keys(data.data).reduce((acc, category) => {
+            acc[category] = 1;
+            return acc;
+          }, {});
+          setPagination({ ...initialPagination, nominators: 1 });
         } else {
           setError('Failed to retrieve nominees');
         }
@@ -42,17 +48,18 @@ const Nominees = () => {
     fetchNominees();
   }, []);
 
-  // Pagination logic
-  const paginate = (array, currentPage, itemsPerPage) => {
+  // Paginate array based on current page for each category
+  const paginate = (array, currentPage) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     return array.slice(startIndex, startIndex + itemsPerPage);
   };
 
-  const handlePageChange = (type, totalPages) => {
-    setCurrentPage((prev) => {
-      if (type === 'next' && prev < totalPages) return prev + 1;
-      if (type === 'prev' && prev > 1) return prev - 1;
-      return prev;
+  const handlePageChange = (type, category, totalPages) => {
+    setPagination((prev) => {
+      const newPage = type === 'next' && prev[category] < totalPages ? prev[category] + 1
+                      : type === 'prev' && prev[category] > 1 ? prev[category] - 1
+                      : prev[category];
+      return { ...prev, [category]: newPage };
     });
   };
 
@@ -65,12 +72,17 @@ const Nominees = () => {
     doc.setFontSize(24);
     doc.text(category.replace(/_/g, ' '), doc.internal.pageSize.getWidth() / 2, 50, null, null, 'center');
 
-    // Add nominee data to PDF
+    // Add entries data to PDF as table
     let yPos = 70;
     entries.forEach((entry, index) => {
       doc.setFontSize(12);
-      doc.text(`Nominee ${index + 1}: ${entry.nomineeName}`, 20, yPos);
-      doc.text(`Total Votes: ${entry.totalVotes}`, 150, yPos);
+      if (category === 'Nominators') {
+        doc.text(`Email: ${entry.email}`, 20, yPos);
+        doc.text(`Date: ${new Date(entry.createdAt).toLocaleDateString()}`, 120, yPos);
+      } else {
+        doc.text(`Nominee ${index + 1}: ${entry.nomineeName}`, 20, yPos);
+        doc.text(`Total Votes: ${entry.totalVotes}`, 150, yPos);
+      }
       yPos += 10;
     });
 
@@ -99,7 +111,7 @@ const Nominees = () => {
       {Object.keys(data).map((category) => {
         const nominees = data[category];
         const totalPages = Math.ceil(nominees.length / itemsPerPage);
-        const paginatedNominees = paginate(nominees, currentPage, itemsPerPage);
+        const paginatedNominees = paginate(nominees, pagination[category]);
 
         return (
           <div key={category} className="mb-8">
@@ -129,13 +141,13 @@ const Nominees = () => {
             <div className="flex justify-between my-4">
               <button
                 className="bg-blue-600 text-white py-2 px-4 rounded"
-                onClick={() => handlePageChange('prev', totalPages)}
+                onClick={() => handlePageChange('prev', category, totalPages)}
               >
                 Previous
               </button>
               <button
                 className="bg-blue-600 text-white py-2 px-4 rounded"
-                onClick={() => handlePageChange('next', totalPages)}
+                onClick={() => handlePageChange('next', category, totalPages)}
               >
                 Next
               </button>
@@ -161,12 +173,14 @@ const Nominees = () => {
             <thead>
               <tr>
                 <th className="py-2 px-4 border">Nominator Email</th>
+                <th className="py-2 px-4 border">Voting Date</th>
               </tr>
             </thead>
             <tbody>
-              {paginate(nominators, currentPage, itemsPerPage).map((nominator, index) => (
+              {paginate(nominators, pagination.nominators).map((nominator, index) => (
                 <tr key={index}>
-                  <td className="py-2 px-4 border">{nominator}</td>
+                  <td className="py-2 px-4 border">{nominator.email}</td>
+                  <td className="py-2 px-4 border">{new Date(nominator.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>
@@ -177,13 +191,13 @@ const Nominees = () => {
         <div className="flex justify-between my-4">
           <button
             className="bg-blue-600 text-white py-2 px-4 rounded"
-            onClick={() => handlePageChange('prev', Math.ceil(nominators.length / itemsPerPage))}
+            onClick={() => handlePageChange('prev', 'nominators', Math.ceil(nominators.length / itemsPerPage))}
           >
             Previous
           </button>
           <button
             className="bg-blue-600 text-white py-2 px-4 rounded"
-            onClick={() => handlePageChange('next', Math.ceil(nominators.length / itemsPerPage))}
+            onClick={() => handlePageChange('next', 'nominators', Math.ceil(nominators.length / itemsPerPage))}
           >
             Next
           </button>
