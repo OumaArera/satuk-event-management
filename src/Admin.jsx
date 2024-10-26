@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import Nominees from './Nominees';
 import Payments from './Payments';
 import Tickets from './Tickets';
+import Votes from './Votes';
 import AuthContext from './AuthContext';
 import backgroundImage from './images/background.jpg';
 
@@ -62,6 +63,15 @@ const Admin = () => {
           Tickets
         </button>
 
+        <button
+          onClick={() => setActiveTab('votes')}
+          className={`py-2 px-4 mb-4 rounded-lg transition ${
+            activeTab === 'votes' ? 'bg-purple-700' : 'bg-purple-500 hover:bg-purple-600'
+          }`}
+        >
+          Votes
+        </button>
+
         {/* Logout Button */}
         <button
           onClick={handleLogout}
@@ -89,6 +99,12 @@ const Admin = () => {
           <div>
             <h2 className="text-3xl font-bold mb-6">Tickets</h2>
             <Tickets />
+          </div>
+        )}
+        {activeTab === 'votes' && (
+          <div>
+            <h2 className="text-3xl font-bold mb-6">Votes</h2>
+            <Votes />
           </div>
         )}
       </div>
