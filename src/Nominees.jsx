@@ -171,14 +171,12 @@ const Nominees = () => {
             <thead>
               <tr>
                 <th className="py-2 px-4 border">Nominator Email</th>
-                <th className="py-2 px-4 border">Voting Date</th>
               </tr>
             </thead>
             <tbody>
               {paginate(nominators, pagination.nominators).map((nominator, index) => (
                 <tr key={index}>
-                  <td className="py-2 px-4 border">{nominator.email}</td>
-                  <td className="py-2 px-4 border">{new Date(nominator.createdAt).toLocaleDateString()}</td>
+                  <td className="py-2 px-4 border">{nominator}</td>
                 </tr>
               ))}
             </tbody>
