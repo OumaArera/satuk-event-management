@@ -52,8 +52,6 @@ const Login = () => {
           name: decodedToken.name,
           type: decodedToken.type
         };
-        Object.entries(userDetails).forEach(([key, value]) => console.log(`${key} : ${value}`));
-        console.log('Token', data.token);
         
         setAuth(userDetails); 
         localStorage.setItem("userData", JSON.stringify(userDetails));

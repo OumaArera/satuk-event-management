@@ -6,14 +6,12 @@ const Nominees = () => {
   const [data, setData] = useState({});
   const [nominators, setNominators] = useState([]);
   const [error, setError] = useState('');
-  const [token, setToken] = useState('');
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({});
   const [itemsPerPage] = useState(5);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('accessToken');
-    if (storedToken) setToken(storedToken);
 
     const fetchNominees = async () => {
       try {
