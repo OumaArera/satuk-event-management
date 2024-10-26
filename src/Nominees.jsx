@@ -63,16 +63,17 @@ const Nominees = () => {
 
   const generatePDF = (category, entries) => {
     const doc = new jsPDF();
-
-    // Add logos
     doc.addImage(satukLogo, 'PNG', 10, 10, 50, 20);
 
     doc.setFontSize(24);
     doc.text(category.replace(/_/g, ' '), doc.internal.pageSize.getWidth() / 2, 50, null, null, 'center');
 
-    // Add entries data to PDF as table
     let yPos = 70;
     entries.forEach((entry, index) => {
+      if (yPos > 270) {  // If yPos exceeds page height, create a new page
+        doc.addPage();
+        yPos = 20;
+      }
       doc.setFontSize(12);
       if (category === 'Nominators') {
         doc.text(`Email: ${entry.email}`, 20, yPos);
@@ -85,15 +86,12 @@ const Nominees = () => {
     });
 
     doc.save(`${category}.pdf`);
-  };
+};
 
-  const generateNominatorsPDF = (nominators) => {
+const generateNominatorsPDF = (nominators) => {
     const doc = new jsPDF();
-
-    // Add logo
     doc.addImage(satukLogo, 'PNG', 10, 10, 50, 20);
 
-    // Set document title for nominators
     doc.setFontSize(24);
     doc.text(
       'Nominators',
@@ -104,9 +102,12 @@ const Nominees = () => {
       'center'
     );
 
-    // Add nominators data as a simple list
     let yPos = 70;
     nominators.forEach((email, index) => {
+      if (yPos > 270) {  // If yPos exceeds page height, create a new page
+        doc.addPage();
+        yPos = 20;
+      }
       doc.setFontSize(12);
       doc.text(`Nominator ${index + 1}: ${email}`, 20, yPos);
       yPos += 10;
@@ -114,6 +115,7 @@ const Nominees = () => {
 
     doc.save('Nominators.pdf');
 };
+
 
 
   const toTitleCase = (str) => {
