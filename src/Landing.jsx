@@ -31,13 +31,11 @@ const Landing = () => {
       <div className="relative z-10 text-center mb-8 text-white">
         {/* Logo Container */}
         <div className="flex justify-center items-center space-x-6 mb-6">
-          {/* SATUK Logo */}
           <img 
             src={satukLogo} 
             alt="SATUK Logo" 
             className="w-40 h-40 rounded-full animate-pulse" 
           />
-          {/* TUK Logo */}
           <img 
             src={tukLogo} 
             alt="TUK Logo" 
@@ -47,6 +45,14 @@ const Landing = () => {
 
         <h1 className="text-5xl font-extrabold mt-4 drop-shadow-md">Welcome to SATUK AWARDS 2024</h1>
         <p className="text-lg mt-2 text-gray-300 drop-shadow-sm">Join us in celebrating excellence!</p>
+      </div>
+
+      {/* Non-TUK Notice */}
+      <div className="relative z-10 text-center bg-red-700 bg-opacity-90 text-white py-2 px-4 rounded-lg shadow-lg mb-8 max-w-3xl">
+        <p className="text-lg font-bold">
+          ** This ticket purchase is only for <span className="text-yellow-300">non-TUK students</span> who want to attend SATUK AWARDS 2024. 
+          TUK students are <span className="underline">not required to pay</span>. **
+        </p>
       </div>
 
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl mb-8">
