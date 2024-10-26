@@ -87,6 +87,34 @@ const Nominees = () => {
     doc.save(`${category}.pdf`);
   };
 
+  const generateNominatorsPDF = (nominators) => {
+    const doc = new jsPDF();
+
+    // Add logo
+    doc.addImage(satukLogo, 'PNG', 10, 10, 50, 20);
+
+    // Set document title for nominators
+    doc.setFontSize(24);
+    doc.text(
+      'Nominators',
+      doc.internal.pageSize.getWidth() / 2,
+      50,
+      null,
+      null,
+      'center'
+    );
+
+    // Add nominators data to PDF
+    let yPos = 70;
+    nominators.forEach((email, index) => {
+      doc.setFontSize(12);
+      doc.text(`Nominator ${index + 1}: ${email}`, 20, yPos);
+      yPos += 10;
+    });
+
+    doc.save('Nominators.pdf');
+};
+
   const toTitleCase = (str) => {
     return str
       .toLowerCase()
@@ -202,7 +230,7 @@ const Nominees = () => {
         {/* Download Nominators PDF Button */}
         <button
           className="bg-green-600 text-white py-2 px-4 rounded"
-          onClick={() => generatePDF('Nominators', nominators)}
+          onClick={() => generateNominatorsPDF(nominators)}
         >
           Download Nominators PDF
         </button>
