@@ -104,7 +104,7 @@ const Nominees = () => {
       'center'
     );
 
-    // Add nominators data to PDF
+    // Add nominators data as a simple list
     let yPos = 70;
     nominators.forEach((email, index) => {
       doc.setFontSize(12);
@@ -114,6 +114,7 @@ const Nominees = () => {
 
     doc.save('Nominators.pdf');
 };
+
 
   const toTitleCase = (str) => {
     return str
