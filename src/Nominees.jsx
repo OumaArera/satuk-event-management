@@ -4119,7 +4119,7 @@ const mockNominees = {
       },
       {
           "nominatorEmail": "martinelasty001@gmail.com",
-          "nomineeName": "lucky jones",
+          "nomineeName": "mbuzi wa migori",
           "totalVotes": "320"
       },
       {
@@ -9765,15 +9765,15 @@ const mockNominees = {
         "totalVotes": "1030"
       },
       {
-        "nominatorEmail": "otienosteveneo24@students.tukenya.ac.ke",
-        "nomineeName": "rigo wear",
-        "totalVotes": "540"
-    },
-      {
           "nominatorEmail": "simmic997@gmail.com",
           "nomineeName": "n/a",
-          "totalVotes": "90"
+          "totalVotes": "360"
       },
+      {
+        "nominatorEmail": "otienosteveneo24@students.tukenya.ac.ke",
+        "nomineeName": "rigo wear",
+        "totalVotes": "270"
+    },
       {
           "nominatorEmail": "grantonmburu01@gmail.com",
           "nomineeName": "na",
@@ -12965,11 +12965,7 @@ const mockNominees = {
       }
   ],
   "The Graphic Designer of the Year Award": [
-      {
-          "nominatorEmail": "simmic997@gmail.com",
-          "nomineeName": "n/a",
-          "totalVotes": "454"
-      },
+      
       {
           "nominatorEmail": "marthamuraya806@gmail.com",
           "nomineeName": "evans kimutai",
@@ -12989,6 +12985,11 @@ const mockNominees = {
         "nominatorEmail": "musaleeaziz@gmail.com",
         "nomineeName": "evans mitei",
         "totalVotes": "489"
+      },
+      {
+        "nominatorEmail": "simmic997@gmail.com",
+        "nomineeName": "n/a",
+        "totalVotes": "454"
       },
       {
           "nominatorEmail": "grantonmburu01@gmail.com",
@@ -24702,52 +24703,52 @@ const mockNominees = {
       }
   ],
   "The Student's Affairs Advocate of the Year Award": [
-      
+      {
+        "nominatorEmail": "simmic997@gmail.com",
+        "nomineeName": "n/a",
+        "totalVotes": "3668"
+      },
       {
         "nominatorEmail": "marthamuraya806@gmail.com",
         "nomineeName": "james kinuthia",
-        "totalVotes": "1569"
+        "totalVotes": "97"
       },
       {
         "nominatorEmail": "marthamuraya806@gmail.com",
         "nomineeName": "stanely motinda",
-        "totalVotes": "1187"
+        "totalVotes": "85"
       },
       {
         "nominatorEmail": "marthamuraya806@gmail.com",
         "nomineeName": "martin nyaga",
-        "totalVotes": "720"
+        "totalVotes": "73"
       },
       {
-          "nominatorEmail": "serahthuku22@gmail.com",
-          "nomineeName": "x",
-          "totalVotes": "707"
-      },
-      {
-        "nominatorEmail": "simmic997@gmail.com",
-        "nomineeName": "n/a",
-        "totalVotes": "447"
-      },
-      {
-          "nominatorEmail": "kenmwaah@gmail.com",
-          "nomineeName": "na",
-          "totalVotes": "239"
-      },
-      {
-          "nominatorEmail": "roselynenekesa262@gmail.com",
-          "nomineeName": "not applicable ",
-          "totalVotes": "163"
-      },
-      {
-          "nominatorEmail": "kimani890@gmail.com",
-          "nomineeName": "n",
-          "totalVotes": "153"
-      },
-      {
-          "nominatorEmail": "nyiethgabbie@gmail.com",
-          "nomineeName": "pass",
-          "totalVotes": "113"
-      },
+        "nominatorEmail": "serahthuku22@gmail.com",
+        "nomineeName": "x",
+        "totalVotes": "707"
+    },
+    
+    {
+        "nominatorEmail": "kenmwaah@gmail.com",
+        "nomineeName": "na",
+        "totalVotes": "239"
+    },
+    {
+        "nominatorEmail": "roselynenekesa262@gmail.com",
+        "nomineeName": "not applicable ",
+        "totalVotes": "163"
+    },
+    {
+        "nominatorEmail": "kimani890@gmail.com",
+        "nomineeName": "n",
+        "totalVotes": "153"
+    },
+    {
+        "nominatorEmail": "nyiethgabbie@gmail.com",
+        "nomineeName": "pass",
+        "totalVotes": "113"
+    },
       {
           "nominatorEmail": "muriithipatrick111@gmail.com",
           "nomineeName": "not available",
