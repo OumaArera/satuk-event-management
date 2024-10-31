@@ -24,7 +24,8 @@ const Votes = () => {
         const data = await response.json();
 
         if (data.success) {
-          setCategories(data.data);
+          // Set categories and voters, excluding categories with categoryId 1 and 2
+          setCategories(data.data.filter(category => category.categoryId !== 1 && category.categoryId !== 2));
           setVoters(data.voters); // Populate voter list
         } else {
           setError('Failed to retrieve candidates');
@@ -56,6 +57,7 @@ const Votes = () => {
     <div className="container mx-auto my-8 px-4">
       <h1 className="text-3xl font-bold text-center mb-8">Vote Counts by Category</h1>
 
+      {/* Display categories excluding those with categoryId 1 and 2 */}
       {categories.map((category) => (
         <div key={category.categoryId} className="category mb-6 p-4 bg-white shadow-md rounded-lg">
           <h2 className="text-2xl font-semibold mb-4">{category.categoryName}</h2>
