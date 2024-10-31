@@ -9767,12 +9767,12 @@ const mockNominees = {
       {
           "nominatorEmail": "simmic997@gmail.com",
           "nomineeName": "n/a",
-          "totalVotes": "360"
+          "totalVotes": "370"
       },
       {
         "nominatorEmail": "otienosteveneo24@students.tukenya.ac.ke",
         "nomineeName": "rigo wear",
-        "totalVotes": "270"
+        "totalVotes": "260"
     },
       {
           "nominatorEmail": "grantonmburu01@gmail.com",
