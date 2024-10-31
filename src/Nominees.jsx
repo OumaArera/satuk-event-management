@@ -28207,7 +28207,6 @@ const Nominees = () => {
 
   return (
     <div className="container mx-auto my-8 px-4">
-      <h1 className="text-3xl font-bold text-center mb-8">Nominees</h1>
 
       {Object.keys(data).map((category) => {
         const nominees = data[category];
