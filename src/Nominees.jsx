@@ -20,7 +20,7 @@ const mockNominees = {
       {
           "nominatorEmail": "simmic997@gmail.com",
           "nomineeName": "n/a",
-          "totalVotes": 455
+          "totalVotes": 469
       },
       {
           "nominatorEmail": "grantonmburu01@gmail.com",
@@ -1223,7 +1223,7 @@ const mockNominees = {
       {
           "nominatorEmail": "serahthuku22@gmail.com",
           "nomineeName": "x",
-          "totalVotes": "174"
+          "totalVotes": "188"
       },
       {
           "nominatorEmail": "oderaisaack@gmail.com",
@@ -2026,7 +2026,7 @@ const mockNominees = {
       {
           "nominatorEmail": "grantonmburu01@gmail.com",
           "nomineeName": "na",
-          "totalVotes": "220"
+          "totalVotes": "251"
       },
       {
           "nominatorEmail": "serahthuku22@gmail.com",
@@ -3298,7 +3298,7 @@ const mockNominees = {
       {
           "nominatorEmail": "serahthuku22@gmail.com",
           "nomineeName": "x",
-          "totalVotes": "174"
+          "totalVotes": "191"
       },
       {
           "nominatorEmail": "oderaisaack@gmail.com",
@@ -4125,7 +4125,7 @@ const mockNominees = {
       {
         "nominatorEmail": "stevenosore63@gmail.com",
         "nomineeName": "n/a",
-        "totalVotes": "243"
+        "totalVotes": "255"
     },
       {
           "nominatorEmail": "oderaisaack@gmail.com",
@@ -5288,7 +5288,7 @@ const mockNominees = {
       {
         "nominatorEmail": "simmic997@gmail.com",
         "nomineeName": "n/a",
-        "totalVotes": "1572"
+        "totalVotes": "1562"
       },
       {
         "nominatorEmail": "spacialjoy00@gmail.com",
@@ -6496,7 +6496,7 @@ const mockNominees = {
       {
         "nominatorEmail": "simmic997@gmail.com",
         "nomineeName": "n/a",
-        "totalVotes": "1576"
+        "totalVotes": "1598"
       },
       {
         "nominatorEmail": "kigwemilly1@gmail.com",
@@ -7545,7 +7545,7 @@ const mockNominees = {
       {
           "nominatorEmail": "simmic997@gmail.com",
           "nomineeName": "n/a",
-          "totalVotes": "370"
+          "totalVotes": "391"
       },
       {
           "nominatorEmail": "grantonmburu01@gmail.com",
@@ -8793,7 +8793,7 @@ const mockNominees = {
       {
           "nominatorEmail": "marthamuraya806@gmail.com",
           "nomineeName": "x",
-          "totalVotes": "175"
+          "totalVotes": "183"
       },
       {
           "nominatorEmail": "oderaisaack@gmail.com",
@@ -9772,7 +9772,7 @@ const mockNominees = {
       {
           "nominatorEmail": "simmic997@gmail.com",
           "nomineeName": "n/a",
-          "totalVotes": "97"
+          "totalVotes": "90"
       },
       {
           "nominatorEmail": "grantonmburu01@gmail.com",
@@ -10989,7 +10989,7 @@ const mockNominees = {
       {
           "nominatorEmail": "martinelasty001@gmail.com",
           "nomineeName": "na",
-          "totalVotes": "226"
+          "totalVotes": "232"
       },
       {
           "nominatorEmail": "serahthuku22@gmail.com",
@@ -12096,7 +12096,7 @@ const mockNominees = {
       {
           "nominatorEmail": "simmic997@gmail.com",
           "nomineeName": "n/a",
-          "totalVotes": "272"
+          "totalVotes": "264"
       },
       {
           "nominatorEmail": "ahubacastrol@gmail.com",
@@ -12998,7 +12998,7 @@ const mockNominees = {
       {
           "nominatorEmail": "roselynenekesa262@gmail.com",
           "nomineeName": "not applicable ",
-          "totalVotes": "163"
+          "totalVotes": "146"
       },
       {
           "nominatorEmail": "kimani890@gmail.com",
@@ -14236,7 +14236,7 @@ const mockNominees = {
       {
           "nominatorEmail": "kenmwaah@gmail.com",
           "nomineeName": "na",
-          "totalVotes": "233"
+          "totalVotes": "253"
       },
       {
           "nominatorEmail": "roselynenekesa262@gmail.com",
@@ -15468,7 +15468,7 @@ const mockNominees = {
       {
           "nominatorEmail": "simmic997@gmail.com",
           "nomineeName": "n/a",
-          "totalVotes": "335"
+          "totalVotes": "329"
       },
       {
           "nominatorEmail": "martinelasty001@gmail.com",
@@ -16745,7 +16745,7 @@ const mockNominees = {
       {
           "nominatorEmail": "sambosaid123@gmail.com",
           "nomineeName": "na",
-          "totalVotes": "229"
+          "totalVotes": "241"
       },
       {
           "nominatorEmail": "serahthuku22@gmail.com",
@@ -18969,7 +18969,7 @@ const mockNominees = {
       {
           "nominatorEmail": "kenmwaah@gmail.com",
           "nomineeName": "na",
-          "totalVotes": "228"
+          "totalVotes": "204"
       },
       {
           "nominatorEmail": "roselynenekesa262@gmail.com",
@@ -20196,7 +20196,7 @@ const mockNominees = {
       {
           "nominatorEmail": "martinelasty001@gmail.com",
           "nomineeName": "na",
-          "totalVotes": "249"
+          "totalVotes": "264"
       },
       {
           "nominatorEmail": "roselynenekesa262@gmail.com",
@@ -21303,7 +21303,7 @@ const mockNominees = {
       {
           "nominatorEmail": "kenmwaah@gmail.com",
           "nomineeName": "na",
-          "totalVotes": "240"
+          "totalVotes": "265"
       },
       {
           "nominatorEmail": "serahthuku22@gmail.com",
@@ -22345,7 +22345,7 @@ const mockNominees = {
       {
           "nominatorEmail": "kenmwaah@gmail.com",
           "nomineeName": "na",
-          "totalVotes": "229"
+          "totalVotes": "247"
       },
       {
           "nominatorEmail": "oderaisaack@gmail.com",
@@ -23457,7 +23457,7 @@ const mockNominees = {
       {
           "nominatorEmail": "simmic997@gmail.com",
           "nomineeName": "n/a",
-          "totalVotes": "279"
+          "totalVotes": "285"
       },
       {
           "nominatorEmail": "grantonmburu01@gmail.com",
@@ -24721,7 +24721,7 @@ const mockNominees = {
       {
           "nominatorEmail": "serahthuku22@gmail.com",
           "nomineeName": "x",
-          "totalVotes": "692"
+          "totalVotes": "707"
       },
       {
         "nominatorEmail": "simmic997@gmail.com",
@@ -25804,7 +25804,7 @@ const mockNominees = {
       {
           "nominatorEmail": "simmic997@gmail.com",
           "nomineeName": "n/a",
-          "totalVotes": "262"
+          "totalVotes": "224"
       },
       {
           "nominatorEmail": "musaleeaziz@gmail.com",
