@@ -92,18 +92,63 @@ const Votes = () => {
 
         {/* Pagination Controls */}
         <div className="pagination mt-4 flex justify-center">
-          {[...Array(totalPages)].map((_, i) => (
+          {currentPage > 1 && (
             <button
-              key={i}
-              onClick={() => handlePageChange(i + 1)}
-              className={`px-3 py-1 mx-1 rounded ${
-                currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-300'
-              }`}
+              onClick={() => handlePageChange(currentPage - 1)}
+              className="px-3 py-1 mx-1 rounded bg-gray-300"
             >
-              {i + 1}
+              Prev
             </button>
-          ))}
+          )}
+
+          {currentPage > 2 && (
+            <>
+              <button onClick={() => handlePageChange(1)} className="px-3 py-1 mx-1 rounded bg-gray-300">
+                1
+              </button>
+              {currentPage > 3 && <span className="px-3">...</span>}
+            </>
+          )}
+
+          {[...Array(totalPages)]
+            .map((_, i) => i + 1)
+            .filter(
+              (page) =>
+                page === currentPage ||
+                page === currentPage - 1 ||
+                page === currentPage + 1
+            )
+            .map((page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`px-3 py-1 mx-1 rounded ${
+                  currentPage === page ? 'bg-blue-600 text-white' : 'bg-gray-300'
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+
+          {currentPage < totalPages - 1 && (
+            <>
+              {currentPage < totalPages - 2 && <span className="px-3">...</span>}
+              <button onClick={() => handlePageChange(totalPages)} className="px-3 py-1 mx-1 rounded bg-gray-300">
+                {totalPages}
+              </button>
+            </>
+          )}
+
+          {currentPage < totalPages && (
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              className="px-3 py-1 mx-1 rounded bg-gray-300"
+            >
+              Next
+            </button>
+          )}
         </div>
+
       </div>
     </div>
   );
