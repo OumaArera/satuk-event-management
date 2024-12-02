@@ -550,7 +550,7 @@ const Votes = () => {
 
   useEffect(() => {
     if (countdown > 0 && !showResults) {
-      const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
+      const timer = setTimeout(() => setCountdown((prev) => prev - 1), 3000);
       return () => clearTimeout(timer);
     } else if (countdown === 0) {
       setShowResults(true);
