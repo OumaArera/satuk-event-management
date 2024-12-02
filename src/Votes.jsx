@@ -630,7 +630,7 @@ const Votes = () => {
     0
   );
 
-  const confettiIntensity = [500, 300, 100];
+  const confettiIntensity = [900, 700, 300];
   const announcementTitles = ["🎉 Winner 🎉", "🥈 1st Runner-up 🥈", "🥉 2nd Runner-up 🥉"];
 
   return (
