@@ -545,7 +545,7 @@ const Votes = () => {
   }, []);
 
   useEffect(() => {
-    setCategories(candidatesVotes);
+    setCategories([...candidatesVotes].reverse()); // Reverse the order
   }, [candidatesVotes]);
 
   useEffect(() => {
@@ -559,12 +559,12 @@ const Votes = () => {
   }, [countdown, showResults]);
 
   useEffect(() => {
-    if (showResults && currentAnnouncementIndex < 3) {
-      setShowConfetti(true);
+    if (showResults && currentAnnouncementIndex <= 3) {
+      setShowConfetti(currentAnnouncementIndex < 3); // Show confetti only for top 3
       const delay = setTimeout(() => {
         setCurrentAnnouncementIndex((prev) => prev + 1);
         setShowConfetti(false);
-      }, 3000);
+      }, 2000);
       return () => clearTimeout(delay);
     }
   }, [currentAnnouncementIndex, showResults]);
@@ -630,7 +630,7 @@ const Votes = () => {
     0
   );
 
-  const confettiIntensity = [500, 300, 100]; // Intensity for Winner, 1st Runner-up, 2nd Runner-up
+  const confettiIntensity = [500, 300, 100];
   const announcementTitles = ["🎉 Winner 🎉", "🥈 1st Runner-up 🥈", "🥉 2nd Runner-up 🥉"];
 
   return (
@@ -651,15 +651,27 @@ const Votes = () => {
         </h2>
         <p className="text-lg mb-4">Total Votes: {totalVotes}</p>
 
-        {showResults && currentAnnouncementIndex < 3 ? (
+        {showResults && currentAnnouncementIndex <= 3 ? (
           <div className="overlay p-6 bg-white shadow-md rounded-lg text-center">
-            <h2 className="text-4xl font-bold text-green-600 mb-4">
-              {announcementTitles[currentAnnouncementIndex]}
-            </h2>
-            <p className="text-2xl font-semibold text-gray-800">
-              {sortedCandidates[currentAnnouncementIndex].name} -{" "}
-              {sortedCandidates[currentAnnouncementIndex].vote} votes
-            </p>
+            {currentAnnouncementIndex < 3 ? (
+              <>
+                <h2 className="text-4xl font-bold text-green-600 mb-4">
+                  {announcementTitles[currentAnnouncementIndex]}
+                </h2>
+                <p className="text-2xl font-semibold text-gray-800">
+                  {sortedCandidates[currentAnnouncementIndex].name} -{" "}
+                  {sortedCandidates[currentAnnouncementIndex].vote} votes
+                </p>
+              </>
+            ) : (
+              <ul>
+                {sortedCandidates.map((candidate, index) => (
+                  <li key={index} className="text-lg font-medium">
+                    {candidate.name}: {candidate.vote} votes
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         ) : !showResults ? (
           <p className="text-4xl font-bold text-red-500 mb-4">
