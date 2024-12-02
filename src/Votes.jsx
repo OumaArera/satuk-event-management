@@ -545,12 +545,12 @@ const Votes = () => {
   }, []);
 
   useEffect(() => {
-    setCategories([...candidatesVotes].reverse()); // Reverse the order
+    setCategories([...candidatesVotes].reverse()); 
   }, [candidatesVotes]);
 
   useEffect(() => {
     if (countdown > 0 && !showResults) {
-      const timer = setTimeout(() => setCountdown((prev) => prev - 1), 3000);
+      const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
       return () => clearTimeout(timer);
     } else if (countdown === 0) {
       setShowResults(true);
@@ -560,7 +560,7 @@ const Votes = () => {
 
   useEffect(() => {
     if (showResults && currentAnnouncementIndex <= 3) {
-      setShowConfetti(currentAnnouncementIndex < 3); // Show confetti only for top 3
+      setShowConfetti(currentAnnouncementIndex < 3); 
       const delay = setTimeout(() => {
         setCurrentAnnouncementIndex((prev) => prev + 1);
         setShowConfetti(false);
