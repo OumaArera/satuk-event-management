@@ -507,7 +507,40 @@ const Votes = () => {
   const [announcementIndex, setAnnouncementIndex] = useState(-1);
   const [voters, setVoters] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false)
   const votersPerPage = 5;
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+
+    const fetchCandidatesAndVoters = async () => {
+      try {
+        const response = await fetch('https://satuk.onrender.com/users/candidate', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+        })
+
+        const data = await response.json();
+
+        if (data.success) {
+          setVoters(data.voters.map(voter => voter.toLowerCase())); 
+        } else {
+          setError('Failed to retrieve candidates');
+        }
+      } catch (err) {
+        setError('Error fetching candidates');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCandidatesAndVoters();
+  }, []);
+
 
   useEffect(() => {
     setCategories(candidatesVotes);
