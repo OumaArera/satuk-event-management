@@ -497,13 +497,13 @@ const candidatesVotes=  [
   
 ]
 
+
 const Votes = () => {
   const [categories, setCategories] = useState([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [countdown, setCountdown] = useState(3);
   const [showResults, setShowResults] = useState(false);
   const [currentAnnouncementIndex, setCurrentAnnouncementIndex] = useState(0);
-  const [leaderboard, setLeaderboard] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const [voters, setVoters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -555,24 +555,12 @@ const Votes = () => {
     } else if (countdown === 0) {
       setShowResults(true);
       setCurrentAnnouncementIndex(0);
-      setLeaderboard([]);
     }
   }, [countdown, showResults]);
 
   useEffect(() => {
-    if (showResults && currentAnnouncementIndex < currentCategory?.candidates.length) {
-      const currentCandidate = sortedCandidates[currentAnnouncementIndex];
-
-      setLeaderboard((prev) => [
-        ...prev,
-        {
-          position: currentAnnouncementIndex + 1,
-          name: currentCandidate.name,
-          votes: currentCandidate.vote,
-        },
-      ]);
-
-      setShowConfetti(currentAnnouncementIndex < 3); // Show confetti for top 3
+    if (showResults && currentAnnouncementIndex <= 3) {
+      setShowConfetti(currentAnnouncementIndex < 3); // Show confetti only for top 3
       const delay = setTimeout(() => {
         setCurrentAnnouncementIndex((prev) => prev + 1);
         setShowConfetti(false);
@@ -586,7 +574,6 @@ const Votes = () => {
     setCountdown(3);
     setShowResults(false);
     setCurrentAnnouncementIndex(0);
-    setLeaderboard([]);
   };
 
   const handlePreviousCategory = () => {
@@ -596,7 +583,6 @@ const Votes = () => {
     setCountdown(3);
     setShowResults(false);
     setCurrentAnnouncementIndex(0);
-    setLeaderboard([]);
   };
 
   const downloadVoters = () => {
@@ -639,6 +625,13 @@ const Votes = () => {
   const sortedCandidates = [...currentCategory.candidates].sort(
     (a, b) => b.vote - a.vote
   );
+  const totalVotes = currentCategory.candidates.reduce(
+    (sum, candidate) => sum + candidate.vote,
+    0
+  );
+
+  const confettiIntensity = [500, 300, 100];
+  const announcementTitles = ["🎉 Winner 🎉", "🥈 1st Runner-up 🥈", "🥉 2nd Runner-up 🥉"];
 
   return (
     <div className="container mx-auto my-8 px-4">
@@ -646,7 +639,7 @@ const Votes = () => {
         <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          numberOfPieces={500}
+          numberOfPieces={confettiIntensity[currentAnnouncementIndex]}
         />
       )}
 
@@ -656,35 +649,35 @@ const Votes = () => {
         <h2 className="text-2xl font-semibold mb-4">
           {currentCategory.categoryName}
         </h2>
-        <p className="text-lg mb-4">
-          Total Votes: {currentCategory.candidates.reduce((sum, c) => sum + c.vote, 0)}
-        </p>
-      </div>
+        <p className="text-lg mb-4">Total Votes: {totalVotes}</p>
 
-      <div className="leaderboard mt-8 p-6 bg-gray-100 shadow-md rounded-lg">
-        <h3 className="text-xl font-bold mb-4">Leaderboard</h3>
-        <table className="w-full border-collapse border border-gray-200">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 px-4 py-2">Position</th>
-              <th className="border border-gray-300 px-4 py-2">Name</th>
-              <th className="border border-gray-300 px-4 py-2">Votes</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leaderboard.map((entry, index) => (
-              <tr key={index}>
-                <td className="border border-gray-300 px-4 py-2 text-center">
-                  {entry.position}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">{entry.name}</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">
-                  {entry.votes}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {showResults && currentAnnouncementIndex <= 3 ? (
+          <div className="overlay p-6 bg-white shadow-md rounded-lg text-center">
+            {currentAnnouncementIndex < 3 ? (
+              <>
+                <h2 className="text-4xl font-bold text-green-600 mb-4">
+                  {announcementTitles[currentAnnouncementIndex]}
+                </h2>
+                <p className="text-2xl font-semibold text-gray-800">
+                  {sortedCandidates[currentAnnouncementIndex].name} -{" "}
+                  {sortedCandidates[currentAnnouncementIndex].vote} votes
+                </p>
+              </>
+            ) : (
+              <ul>
+                {sortedCandidates.map((candidate, index) => (
+                  <li key={index} className="text-lg font-medium">
+                    {candidate.name}: {candidate.vote} votes
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ) : !showResults ? (
+          <p className="text-4xl font-bold text-red-500 mb-4">
+            Counting down: {countdown}
+          </p>
+        ) : null}
       </div>
 
       <div className="pagination mt-6 text-center">
@@ -737,7 +730,6 @@ const Votes = () => {
 };
 
 export default Votes;
-
 
 
 
