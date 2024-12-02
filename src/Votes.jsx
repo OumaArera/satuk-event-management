@@ -657,7 +657,8 @@ const Votes = () => {
               {announcementTitles[currentAnnouncementIndex]}
             </h2>
             <p className="text-2xl font-semibold text-gray-800">
-              {sortedCandidates[currentAnnouncementIndex].name}
+              {sortedCandidates[currentAnnouncementIndex].name} -{" "}
+              {sortedCandidates[currentAnnouncementIndex].vote} votes
             </p>
           </div>
         ) : !showResults ? (
@@ -717,6 +718,7 @@ const Votes = () => {
 };
 
 export default Votes;
+
 
 
 
