@@ -497,10 +497,6 @@ const candidatesVotes=  [
   
 ]
 
-
-import React, { useState, useEffect } from "react";
-import Confetti from "react-confetti";
-
 const Votes = () => {
   const [categories, setCategories] = useState([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
