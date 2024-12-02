@@ -497,11 +497,15 @@ const candidatesVotes=  [
   
 ]
 
+import { useState, useEffect } from "react";
+import Confetti from "react-confetti";
+
 const Votes = () => {
   const [categories, setCategories] = useState([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [countdown, setCountdown] = useState(3);
   const [showResults, setShowResults] = useState(false);
+  const [currentAnnouncementIndex, setCurrentAnnouncementIndex] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [voters, setVoters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -528,7 +532,7 @@ const Votes = () => {
         const data = await response.json();
 
         if (data.success) {
-          setVoters(data.voters.map((voter) => voter.toLowerCase())); // Convert voter emails to lowercase
+          setVoters(data.voters.map((voter) => voter.toLowerCase()));
         } else {
           setError("Failed to retrieve candidates");
         }
@@ -552,15 +556,26 @@ const Votes = () => {
       return () => clearTimeout(timer);
     } else if (countdown === 0) {
       setShowResults(true);
-      setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000);
+      setCurrentAnnouncementIndex(0);
     }
   }, [countdown, showResults]);
+
+  useEffect(() => {
+    if (showResults && currentAnnouncementIndex < 3) {
+      setShowConfetti(true);
+      const delay = setTimeout(() => {
+        setCurrentAnnouncementIndex((prev) => prev + 1);
+        setShowConfetti(false);
+      }, 3000);
+      return () => clearTimeout(delay);
+    }
+  }, [currentAnnouncementIndex, showResults]);
 
   const handleNextCategory = () => {
     setCurrentCategoryIndex((prevIndex) => (prevIndex + 1) % categories.length);
     setCountdown(3);
     setShowResults(false);
+    setCurrentAnnouncementIndex(0);
   };
 
   const handlePreviousCategory = () => {
@@ -569,11 +584,12 @@ const Votes = () => {
     );
     setCountdown(3);
     setShowResults(false);
+    setCurrentAnnouncementIndex(0);
   };
 
   const downloadVoters = () => {
-    const timestamp = new Date().toLocaleString(); // Get current date and time
-    const securityToken = `Token-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`; // Generate a random token
+    const timestamp = new Date().toLocaleString();
+    const securityToken = `Token-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`;
 
     const voterList = [
       `Voters List - Generated on: ${timestamp}`,
@@ -616,11 +632,19 @@ const Votes = () => {
     0
   );
 
+  const confettiIntensity = [500, 300, 100]; // Intensity for Winner, 1st Runner-up, 2nd Runner-up
+  const announcementTitles = ["🎉 Winner 🎉", "🥈 1st Runner-up 🥈", "🥉 2nd Runner-up 🥉"];
+
   return (
     <div className="container mx-auto my-8 px-4">
       {showConfetti && (
-        <Confetti width={window.innerWidth} height={window.innerHeight} />
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          numberOfPieces={confettiIntensity[currentAnnouncementIndex]}
+        />
       )}
+
       <h1 className="text-3xl font-bold text-center mb-8">Vote Results</h1>
 
       <div className="category p-6 bg-white shadow-md rounded-lg text-center">
@@ -629,38 +653,20 @@ const Votes = () => {
         </h2>
         <p className="text-lg mb-4">Total Votes: {totalVotes}</p>
 
-        {!showResults ? (
+        {showResults && currentAnnouncementIndex < 3 ? (
+          <div className="overlay p-6 bg-white shadow-md rounded-lg text-center">
+            <h2 className="text-4xl font-bold text-green-600 mb-4">
+              {announcementTitles[currentAnnouncementIndex]}
+            </h2>
+            <p className="text-2xl font-semibold text-gray-800">
+              {sortedCandidates[currentAnnouncementIndex].name}
+            </p>
+          </div>
+        ) : !showResults ? (
           <p className="text-4xl font-bold text-red-500 mb-4">
             Counting down: {countdown}
           </p>
-        ) : (
-          <div className="results">
-            <div className="winner mb-4">
-              <h3 className="text-3xl font-bold text-green-500">
-                🎉 Winner: {sortedCandidates[0].name} 🎉
-              </h3>
-              <p className="text-lg text-gray-700">
-                Votes: {sortedCandidates[0].vote}
-              </p>
-            </div>
-            <div className="first-runner-up mb-4">
-              <h4 className="text-2xl font-semibold text-blue-500">
-                🥈 1st Runner-up: {sortedCandidates[1].name}
-              </h4>
-              <p className="text-lg text-gray-700">
-                Votes: {sortedCandidates[1].vote}
-              </p>
-            </div>
-            <div className="second-runner-up">
-              <h5 className="text-2xl font-semibold text-purple-500">
-                🥉 2nd Runner-up: {sortedCandidates[2].name}
-              </h5>
-              <p className="text-lg text-gray-700">
-                Votes: {sortedCandidates[2].vote}
-              </p>
-            </div>
-          </div>
-        )}
+        ) : null}
       </div>
 
       <div className="pagination mt-6 text-center">
@@ -680,7 +686,7 @@ const Votes = () => {
 
       <div className="voter-section mt-8">
         <h2 className="text-xl font-bold mb-4">Voters</h2>
-        <ul className="list-disc list-inside">
+        <ul className="list-none">
           {currentVoters.map((voter, index) => (
             <li key={index}>{voter}</li>
           ))}
@@ -713,5 +719,6 @@ const Votes = () => {
 };
 
 export default Votes;
+
 
 
