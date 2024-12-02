@@ -498,18 +498,57 @@ const candidatesVotes=  [
 ]
 
 
+import React, { useState, useEffect } from "react";
+import Confetti from "react-confetti";
+
 const Votes = () => {
   const [categories, setCategories] = useState([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [countdown, setCountdown] = useState(3);
   const [showResults, setShowResults] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [voters, setVoters] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const votersPerPage = 10;
 
-  
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    const fetchCandidatesAndVoters = async () => {
+      try {
+        const response = await fetch(
+          "https://satuk.onrender.com/users/candidate",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+          setVoters(data.voters.map((voter) => voter.toLowerCase())); // Convert voter emails to lowercase
+        } else {
+          setError("Failed to retrieve candidates");
+        }
+      } catch (err) {
+        setError("Error fetching candidates");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCandidatesAndVoters();
+  }, []);
 
   useEffect(() => {
     setCategories(candidatesVotes);
-  }, []);
+  }, [candidatesVotes]);
 
   useEffect(() => {
     if (countdown > 0 && !showResults) {
@@ -528,36 +567,101 @@ const Votes = () => {
     setShowResults(false);
   };
 
+  const handlePreviousCategory = () => {
+    setCurrentCategoryIndex(
+      (prevIndex) => (prevIndex - 1 + categories.length) % categories.length
+    );
+    setCountdown(3);
+    setShowResults(false);
+  };
+
+  const downloadVoters = () => {
+    const timestamp = new Date().toLocaleString(); // Get current date and time
+    const securityToken = `Token-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`; // Generate a random token
+
+    const voterList = [
+      `Voters List - Generated on: ${timestamp}`,
+      `Security Token: ${securityToken}`,
+      "----------------------------------------",
+      ...voters.map((voter, index) => `${index + 1}. ${voter}`),
+    ].join("\n");
+
+    const blob = new Blob([voterList], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `voters_list_${Date.now()}.txt`;
+    link.click();
+  };
+
+  const totalPages = Math.ceil(voters.length / votersPerPage);
+  const currentVoters = voters.slice(
+    (currentPage - 1) * votersPerPage,
+    currentPage * votersPerPage
+  );
+
+  const handlePageChange = (direction) => {
+    if (direction === "next" && currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    } else if (direction === "prev" && currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
   if (categories.length === 0) return <p>Loading categories...</p>;
 
   const currentCategory = categories[currentCategoryIndex];
-  const sortedCandidates = [...currentCategory.candidates].sort((a, b) => b.vote - a.vote);
-  const totalVotes = currentCategory.candidates.reduce((sum, candidate) => sum + candidate.vote, 0);
+  const sortedCandidates = [...currentCategory.candidates].sort(
+    (a, b) => b.vote - a.vote
+  );
+  const totalVotes = currentCategory.candidates.reduce(
+    (sum, candidate) => sum + candidate.vote,
+    0
+  );
 
   return (
     <div className="container mx-auto my-8 px-4">
-      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
+      {showConfetti && (
+        <Confetti width={window.innerWidth} height={window.innerHeight} />
+      )}
       <h1 className="text-3xl font-bold text-center mb-8">Vote Results</h1>
 
       <div className="category p-6 bg-white shadow-md rounded-lg text-center">
-        <h2 className="text-2xl font-semibold mb-4">{currentCategory.categoryName}</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          {currentCategory.categoryName}
+        </h2>
         <p className="text-lg mb-4">Total Votes: {totalVotes}</p>
 
         {!showResults ? (
-          <p className="text-4xl font-bold text-red-500 mb-4">Counting down: {countdown}</p>
+          <p className="text-4xl font-bold text-red-500 mb-4">
+            Counting down: {countdown}
+          </p>
         ) : (
           <div className="results">
             <div className="winner mb-4">
-              <h3 className="text-3xl font-bold text-green-500">🎉 Winner: {sortedCandidates[0].name} 🎉</h3>
-              <p className="text-lg text-gray-700">Votes: {sortedCandidates[0].vote}</p>
+              <h3 className="text-3xl font-bold text-green-500">
+                🎉 Winner: {sortedCandidates[0].name} 🎉
+              </h3>
+              <p className="text-lg text-gray-700">
+                Votes: {sortedCandidates[0].vote}
+              </p>
             </div>
             <div className="first-runner-up mb-4">
-              <h4 className="text-2xl font-semibold text-blue-500">🥈 1st Runner-up: {sortedCandidates[1].name}</h4>
-              <p className="text-lg text-gray-700">Votes: {sortedCandidates[1].vote}</p>
+              <h4 className="text-2xl font-semibold text-blue-500">
+                🥈 1st Runner-up: {sortedCandidates[1].name}
+              </h4>
+              <p className="text-lg text-gray-700">
+                Votes: {sortedCandidates[1].vote}
+              </p>
             </div>
             <div className="second-runner-up">
-              <h5 className="text-2xl font-semibold text-purple-500">🥉 2nd Runner-up: {sortedCandidates[2].name}</h5>
-              <p className="text-lg text-gray-700">Votes: {sortedCandidates[2].vote}</p>
+              <h5 className="text-2xl font-semibold text-purple-500">
+                🥉 2nd Runner-up: {sortedCandidates[2].name}
+              </h5>
+              <p className="text-lg text-gray-700">
+                Votes: {sortedCandidates[2].vote}
+              </p>
             </div>
           </div>
         )}
@@ -565,10 +669,47 @@ const Votes = () => {
 
       <div className="pagination mt-6 text-center">
         <button
+          onClick={handlePreviousCategory}
+          className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 mr-4"
+        >
+          Previous Category
+        </button>
+        <button
           onClick={handleNextCategory}
           className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           Next Category
+        </button>
+      </div>
+
+      <div className="voter-section mt-8">
+        <h2 className="text-xl font-bold mb-4">Voters</h2>
+        <ul className="list-disc list-inside">
+          {currentVoters.map((voter, index) => (
+            <li key={index}>{voter}</li>
+          ))}
+        </ul>
+        <div className="pagination mt-4">
+          <button
+            onClick={() => handlePageChange("prev")}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-600 text-white rounded mr-4"
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => handlePageChange("next")}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-600 text-white rounded"
+          >
+            Next
+          </button>
+        </div>
+        <button
+          onClick={downloadVoters}
+          className="px-6 py-2 bg-green-600 text-white rounded mt-4"
+        >
+          Download Voter List
         </button>
       </div>
     </div>
@@ -576,4 +717,5 @@ const Votes = () => {
 };
 
 export default Votes;
+
 
