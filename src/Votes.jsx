@@ -504,33 +504,84 @@ const Votes = () => {
   const [countdown, setCountdown] = useState(3);
   const [showResults, setShowResults] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [announcementIndex, setAnnouncementIndex] = useState(-1);
+  const [voters, setVoters] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const votersPerPage = 5;
 
   useEffect(() => {
     setCategories(candidatesVotes);
   }, []);
 
+  const handleNextCategory = () => {
+    setCurrentCategoryIndex((prev) =>
+      prev + 1 === categories.length ? 0 : prev + 1
+    );
+    resetState();
+  };
+
+  const handlePreviousCategory = () => {
+    setCurrentCategoryIndex((prev) =>
+      prev === 0 ? categories.length - 1 : prev - 1
+    );
+    resetState();
+  };
+
+  const resetState = () => {
+    setCountdown(3);
+    setShowResults(false);
+    setAnnouncementIndex(-1);
+  };
+
   useEffect(() => {
     if (countdown > 0 && !showResults) {
       const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (countdown === 0) {
+    } else if (countdown === 0 && !showResults) {
       setShowResults(true);
       setShowConfetti(true);
+      setAnnouncementIndex(0);
       setTimeout(() => setShowConfetti(false), 3000);
     }
   }, [countdown, showResults]);
 
-  const handleNextCategory = () => {
-    setCurrentCategoryIndex((prevIndex) => (prevIndex + 1) % categories.length);
-    setCountdown(3);
-    setShowResults(false);
-  };
-
-  if (categories.length === 0) return <p>Loading categories...</p>;
+  useEffect(() => {
+    if (announcementIndex >= 0 && announcementIndex < 3) {
+      const timer = setTimeout(() => setAnnouncementIndex((prev) => prev + 1), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [announcementIndex]);
 
   const currentCategory = categories[currentCategoryIndex];
-  const sortedCandidates = [...currentCategory.candidates].sort((a, b) => b.vote - a.vote);
-  const totalVotes = currentCategory.candidates.reduce((sum, candidate) => sum + candidate.vote, 0);
+  const sortedCandidates = [...currentCategory.candidates].sort(
+    (a, b) => b.vote - a.vote
+  );
+  const totalVotes = sortedCandidates.reduce((sum, candidate) => sum + candidate.vote, 0);
+
+  const totalPages = Math.ceil(voters.length / votersPerPage);
+  const displayedVoters = voters.slice(
+    (currentPage - 1) * votersPerPage,
+    currentPage * votersPerPage
+  );
+
+  const handlePageChange = (page) => setCurrentPage(page);
+
+  const downloadVoters = () => {
+    const timestamp = new Date().toLocaleString();
+    const securityToken = `Token-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`;
+    const voterList = [
+      `Voters List - Generated on: ${timestamp}`,
+      `Security Token: ${securityToken}`,
+      "----------------------------------------",
+      ...voters.map((voter, index) => `${index + 1}. ${voter}`),
+    ].join("\n");
+
+    const blob = new Blob([voterList], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `voters_list_${Date.now()}.txt`;
+    link.click();
+  };
 
   return (
     <div className="container mx-auto my-8 px-4">
@@ -545,29 +596,66 @@ const Votes = () => {
           <p className="text-4xl font-bold text-red-500 mb-4">Counting down: {countdown}</p>
         ) : (
           <div className="results">
-            <div className="winner mb-4">
-              <h3 className="text-3xl font-bold text-green-500">🎉 Winner: {sortedCandidates[0].name} 🎉</h3>
-              <p className="text-lg text-gray-700">Votes: {sortedCandidates[0].vote}</p>
-            </div>
-            <div className="first-runner-up mb-4">
-              <h4 className="text-2xl font-semibold text-blue-500">🥈 1st Runner-up: {sortedCandidates[1].name}</h4>
-              <p className="text-lg text-gray-700">Votes: {sortedCandidates[1].vote}</p>
-            </div>
-            <div className="second-runner-up">
-              <h5 className="text-2xl font-semibold text-purple-500">🥉 2nd Runner-up: {sortedCandidates[2].name}</h5>
-              <p className="text-lg text-gray-700">Votes: {sortedCandidates[2].vote}</p>
-            </div>
+            {announcementIndex >= 0 && announcementIndex < 3 && (
+              <div className="announcement mb-4">
+                <h3 className={`text-${announcementIndex === 0 ? "green" : announcementIndex === 1 ? "blue" : "purple"}-500 text-3xl font-bold`}>
+                  {announcementIndex === 0 && `🎉 Winner: ${sortedCandidates[0].name} 🎉`}
+                  {announcementIndex === 1 && `🥈 1st Runner-up: ${sortedCandidates[1].name}`}
+                  {announcementIndex === 2 && `🥉 2nd Runner-up: ${sortedCandidates[2].name}`}
+                </h3>
+                <p className="text-lg text-gray-700">
+                  Votes: {sortedCandidates[announcementIndex].vote}
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>
 
-      <div className="pagination mt-6 text-center">
-        <button
-          onClick={handleNextCategory}
-          className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
+      <div className="pagination flex justify-between mt-6">
+        <button onClick={handlePreviousCategory} className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          Previous Category
+        </button>
+        <button onClick={handleNextCategory} className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
           Next Category
         </button>
+      </div>
+
+      <div className="voters bg-white shadow-md rounded-lg p-6 mt-8">
+        <h2 className="text-2xl font-bold mb-4">Voters List</h2>
+        <button onClick={downloadVoters} className="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+          Download Voters List
+        </button>
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr>
+              <th className="border-b-2 p-4">#</th>
+              <th className="border-b-2 p-4">Voter Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {displayedVoters.map((voter, index) => (
+              <tr key={index} className="border-b">
+                <td className="p-4">{(currentPage - 1) * votersPerPage + index + 1}</td>
+                <td className="p-4">{voter}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="pagination mt-4 flex justify-center">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => handlePageChange(page)}
+              className={`px-3 py-1 mx-1 rounded ${
+                currentPage === page ? "bg-blue-600 text-white" : "bg-gray-300"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
