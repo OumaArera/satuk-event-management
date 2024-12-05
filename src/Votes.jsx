@@ -21,6 +21,7 @@ import yvette from './images/yvette.jpg';
 import fsst from './images/fsst.jpg';
 import martha from './images/martha.jpg';
 import motinda from './images/mutinda.jpg';
+import tecla from './images/tecla.jpg';
 
 
 const candidatesVotes=  [
@@ -370,7 +371,7 @@ const candidatesVotes=  [
               "id": 49,
               "name": "Tecla Barasa",
               "vote": 6098,
-              "image": null
+              "image": tecla
           },
           {
               "id": 50,
