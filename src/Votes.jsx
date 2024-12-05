@@ -712,16 +712,24 @@ const Votes = () => {
           </button>
         </div>
       )}
-
+      {/* <p className="text-2xl font-semibold">{otherAwards[showOtherAwardIndex].winner}</p> */}
       {showStage === 3 && (
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-4">{otherAwards[showOtherAwardIndex].category}</h1>
-          <p className="text-2xl font-semibold">{otherAwards[showOtherAwardIndex].winner}</p>
-          <img
-            src={otherAwards[showOtherAwardIndex].image}
-            alt={otherAwards[showOtherAwardIndex].winner}
-            className="w-40 h-40 rounded-full mb-4"
-          />
+          <div className="flex items-center justify-center flex-col">
+            {otherAwards[showOtherAwardIndex].image ? (
+              <img
+                src={otherAwards[showOtherAwardIndex].image}
+                alt={otherAwards[showOtherAwardIndex].winner}
+                className="w-40 h-40 rounded-full mb-4"
+              />
+            ) : (
+              <div className="w-40 h-40 flex items-center justify-center bg-gray-200 rounded-full mb-4">
+                <span className="text-4xl font-bold text-gray-500">🏆</span>
+              </div>
+            )}
+            <p className="text-3xl font-bold">{otherAwards[showOtherAwardIndex].winner}</p>
+          </div>
           {showOtherAwardIndex < otherAwards.length - 1 ? (
             <button
               onClick={handleNextOtherAward}
@@ -734,6 +742,7 @@ const Votes = () => {
           )}
         </div>
       )}
+
     </div>
   );
 };
