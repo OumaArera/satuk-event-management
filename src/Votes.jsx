@@ -16,6 +16,12 @@ import palimwacha from './images/Emmanuel Palimwacha.jpg';
 import hammer from './images/Tuk Hammers.jpg';
 import lawrence from './images/Lawrence Osuru.jpeg';
 
+import damaris from './images/damaris.jpg';
+import yvette from './images/yvette.jpg';
+import fsst from './images/fsst.jpg';
+import martha from './images/martha.jpg';
+import motinda from './images/mutinda.jpg';
+
 
 const candidatesVotes=  [
 
@@ -95,7 +101,7 @@ const candidatesVotes=  [
               "id": 17,
               "name": "Stanley Motinda",
               "vote": 4712,
-              "image": null
+              "image": motinda
           },
           {
             "id": 18,
@@ -141,7 +147,7 @@ const candidatesVotes=  [
             "id": 22,
             "name": "FSST",
             "vote": 5333,
-            "image": null
+            "image": fsst
           },
           {
               "id": 23,
@@ -254,7 +260,7 @@ const candidatesVotes=  [
             "id": 37,
             "name": "Martha Muraya",
             "vote": 6210,
-            "image": null
+            "image": martha
           },
           {
               "id": 39,
@@ -386,7 +392,7 @@ const candidatesVotes=  [
             "id": 52,
             "name": "Yvette Kenyatta",
             "vote": 5174,
-            "image": null
+            "image": yvette
           },
           {
               "id": 53,
@@ -430,7 +436,7 @@ const candidatesVotes=  [
             "id": 58,
             "name": "Damaris Njeri",
             "vote": 5723,
-            'image': null
+            'image': damaris
           },
           {
               "id": 59,
@@ -538,22 +544,39 @@ const candidatesVotes=  [
   
 ]
 
+
+const otherAwards = [
+  {
+    category: "Vice Chancellor's Award",
+    winner: "Phoebe Cheptoo",
+  },
+  {
+    category: "The Presidential Award",
+    winner: "Joshua Praise",
+  },
+];
+
 const Votes = () => {
   const [categories, setCategories] = useState([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [countdown, setCountdown] = useState(3);
-  const [showStage, setShowStage] = useState(0); 
+  const [showStage, setShowStage] = useState(0); // 0: Initial, 1: Show Top 3, 2: Show Winner, 3: Other Awards
   const [loadingWinner, setLoadingWinner] = useState(false);
   const [rotatingCandidates, setRotatingCandidates] = useState("");
+  const [showOtherAwardIndex, setShowOtherAwardIndex] = useState(0);
 
   useEffect(() => {
     setCategories([...candidatesVotes].reverse());
   }, []);
 
   const handleNextCategory = () => {
-    setCurrentCategoryIndex((prevIndex) => (prevIndex + 1) % categories.length);
-    setCountdown(3);
-    setShowStage(0);
+    if (currentCategoryIndex < categories.length - 1) {
+      setCurrentCategoryIndex((prevIndex) => prevIndex + 1);
+      setCountdown(3);
+      setShowStage(0);
+    } else {
+      setShowStage(3); // Transition to other awards after final category
+    }
   };
 
   const handleStartCategory = () => {
@@ -582,7 +605,15 @@ const Votes = () => {
       clearInterval(rotateInterval);
       setLoadingWinner(false);
       setShowStage(2);
-    }, 5000); // Delay before revealing the winner
+    }, 5000);
+  };
+
+  const handleNextOtherAward = () => {
+    if (showOtherAwardIndex < otherAwards.length - 1) {
+      setShowOtherAwardIndex((prevIndex) => prevIndex + 1);
+    } else {
+      setShowStage(-1); // End of awards
+    }
   };
 
   if (categories.length === 0) return <p>Loading categories...</p>;
@@ -598,10 +629,14 @@ const Votes = () => {
 
   return (
     <div className="container mx-auto my-8 px-4">
-      <h1 className="text-3xl font-bold text-center mb-8">
-        {currentCategory.categoryName}
-      </h1>
-      <p className="text-lg text-center mb-4">Total Votes: {totalVotes}</p>
+      {showStage >= 0 && showStage < 3 && (
+        <>
+          <h1 className="text-3xl font-bold text-center mb-8">
+            {currentCategory.categoryName}
+          </h1>
+          <p className="text-lg text-center mb-4">Total Votes: {totalVotes}</p>
+        </>
+      )}
 
       {showStage === 0 && (
         <button
@@ -669,6 +704,23 @@ const Votes = () => {
           >
             Next Category
           </button>
+        </div>
+      )}
+
+      {showStage === 3 && (
+        <div className="text-center">
+          <h1 className="text-3xl font-bold mb-4">{otherAwards[showOtherAwardIndex].category}</h1>
+          <p className="text-2xl font-semibold">{otherAwards[showOtherAwardIndex].winner}</p>
+          {showOtherAwardIndex < otherAwards.length - 1 ? (
+            <button
+              onClick={handleNextOtherAward}
+              className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Next Award
+            </button>
+          ) : (
+            <p className="text-xl mt-6">🎉 End of Awards 🎉</p>
+          )}
         </div>
       )}
     </div>
