@@ -533,13 +533,13 @@ const candidatesVotes=  [
   
 ]
 
-
 const Votes = () => {
   const [categories, setCategories] = useState([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [countdown, setCountdown] = useState(3);
   const [showStage, setShowStage] = useState(0); // 0: Initial, 1: Show Top 3, 2: Show Winner
   const [loadingWinner, setLoadingWinner] = useState(false);
+  const [rotatingCandidates, setRotatingCandidates] = useState("");
 
   useEffect(() => {
     setCategories([...candidatesVotes].reverse());
@@ -563,9 +563,18 @@ const Votes = () => {
     }
   }, [countdown, showStage]);
 
-  const handleShowWinner = () => {
+  const handleShowWinner = (candidates) => {
+    let index = 0;
+    setRotatingCandidates(candidates[index].name);
+
+    const rotateInterval = setInterval(() => {
+      index = (index + 1) % candidates.length;
+      setRotatingCandidates(candidates[index].name);
+    }, 500);
+
     setLoadingWinner(true);
     setTimeout(() => {
+      clearInterval(rotateInterval);
       setLoadingWinner(false);
       setShowStage(2);
     }, 5000); // Delay before revealing the winner
@@ -611,7 +620,9 @@ const Votes = () => {
           <p className="text-lg">Votes: {sortedCandidates[2].vote}</p>
 
           <button
-            onClick={handleShowWinner}
+            onClick={() =>
+              handleShowWinner([sortedCandidates[1], sortedCandidates[0]])
+            }
             className="mt-6 px-6 py-2 bg-orange-600 text-white rounded hover:bg-orange-700"
           >
             Who's the Winner?
@@ -620,17 +631,18 @@ const Votes = () => {
       )}
 
       {loadingWinner && (
-        <p className="text-2xl text-center font-bold text-gray-600">
-          Determining Winner...
-        </p>
+        <div className="text-center">
+          <p className="text-2xl font-bold text-gray-600">
+            Determining Winner...
+          </p>
+          <p className="text-4xl font-bold text-orange-500">{rotatingCandidates}</p>
+        </div>
       )}
 
       {showStage === 2 && (
         <div className="text-center">
           <h2 className="text-4xl font-bold text-green-600 mb-4">🎉 Winner 🎉</h2>
-          {showStage === 2 && (
-            <Confetti width={window.innerWidth} height={window.innerHeight} />
-          )}
+          <Confetti width={window.innerWidth} height={window.innerHeight} />
           <div className="flex items-center justify-center flex-col">
             {sortedCandidates[0].image ? (
               <img
