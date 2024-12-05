@@ -48,7 +48,7 @@ const Admin = () => {
         <button
           onClick={() => setActiveTab('payments')}
           className={`py-2 px-4 mb-4 rounded-lg transition ${
-            activeTab === 'payments' ? 'bg-green-700' : 'bg-green-500 hover:bg-green-600'
+            activeTab === 'payments' ? 'bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'
           }`}
         >
           Payments
@@ -57,7 +57,7 @@ const Admin = () => {
         <button
           onClick={() => setActiveTab('tickets')}
           className={`py-2 px-4 mb-4 rounded-lg transition ${
-            activeTab === 'tickets' ? 'bg-yellow-700' : 'bg-yellow-500 hover:bg-yellow-600'
+            activeTab === 'tickets' ? 'bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'
           }`}
         >
           Tickets
@@ -66,7 +66,7 @@ const Admin = () => {
         <button
           onClick={() => setActiveTab('votes')}
           className={`py-2 px-4 mb-4 rounded-lg transition ${
-            activeTab === 'votes' ? 'bg-purple-700' : 'bg-purple-500 hover:bg-purple-600'
+            activeTab === 'votes' ? 'bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'
           }`}
         >
           Votes

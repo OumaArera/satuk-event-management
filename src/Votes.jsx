@@ -537,7 +537,7 @@ const Votes = () => {
   const [categories, setCategories] = useState([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [countdown, setCountdown] = useState(3);
-  const [showStage, setShowStage] = useState(0); // 0: Initial, 1: Show Top 3, 2: Show Winner
+  const [showStage, setShowStage] = useState(0); 
   const [loadingWinner, setLoadingWinner] = useState(false);
   const [rotatingCandidates, setRotatingCandidates] = useState("");
 
