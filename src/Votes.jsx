@@ -594,7 +594,7 @@ const Votes = () => {
   return (
     <div className="container mx-auto my-8 px-4">
       <h1 className="text-3xl font-bold text-center mb-8">
-        Vote Results: {currentCategory.categoryName}
+        {currentCategory.categoryName}
       </h1>
       <p className="text-lg text-center mb-4">Total Votes: {totalVotes}</p>
 
