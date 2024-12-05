@@ -553,7 +553,7 @@ const otherAwards = [
   {
     category: "Vice Chancellor's Award",
     winner: "Phoebe Cheptoo",
-    imgae: phoebe
+    image: phoebe
   },
   {
     category: "The Presidential Award",
