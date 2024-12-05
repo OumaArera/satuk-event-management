@@ -1,6 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Confetti from 'react-confetti';
 
+import peterMarite from './images/Peter Marite.jpg';
+import sherlineWambui from './images/Sherline Wambui.jpg';
+import evanceOuma from './images/Evans Ouma.jpg';
+import mbuzi from './images/MBUZI WA MIGORI.jpg';
+import burudani from './images/Burudani 14.jpg';
+import kariuki from './images/Kelvin Kariuki.jpg';
+import kimutai from './images/KIMUTAI EVANS.jpg';
+import timothy from './images/Timothy Olumunyak.jpg';
+import whiteShadow from './images/White Shadow1.jpg';
+import abdi from './images/Leila Abdi.jpg';
+import taekwondo from './images/TUK Taekwondo.jpeg';
+import palimwacha from './images/Emmanuel Palimwacha.jpg';
+
 const candidatesVotes=  [
 
   {
@@ -10,7 +23,8 @@ const candidatesVotes=  [
           {
             "id": 8,
             "name": "Peter Marite",
-            "vote": 4614
+            "vote": 4614,
+            "image": peterMarite
           },
           {
               "id": 9,
@@ -32,7 +46,8 @@ const candidatesVotes=  [
           {
               "id": 10,
               "name": "Sherline Wambui",
-              "vote": 4876
+              "vote": 4876,
+              "image": sherlineWambui
           },
           {
               "id": 11,
@@ -53,7 +68,8 @@ const candidatesVotes=  [
           {
               "id": 14,
               "name": "Evance Ouma",
-              "vote": 4866
+              "vote": 4866,
+              'image':evanceOuma
           },
           {
             "id": 15,
@@ -75,7 +91,8 @@ const candidatesVotes=  [
           {
               "id": 17,
               "name": "Stanley Motinda",
-              "vote": 4712
+              "vote": 4712,
+              "image": null
           },
           {
             "id": 18,
@@ -97,7 +114,8 @@ const candidatesVotes=  [
           {
             "id": 21,
             "name": "Mbuzi Wa Migori",
-            "vote": 4715
+            "vote": 4715,
+            "image": mbuzi
           },
           {
               "id": 20,
@@ -119,7 +137,8 @@ const candidatesVotes=  [
           {
             "id": 22,
             "name": "FSST",
-            "vote": 5333
+            "vote": 5333,
+            "image": null
           },
           {
               "id": 23,
@@ -142,7 +161,8 @@ const candidatesVotes=  [
           {
               "id": 26,
               "name": "Burudani 14",
-              "vote": 5684
+              "vote": 5684,
+              "image": burudani
           },
           {
             "id": 25,
@@ -164,7 +184,8 @@ const candidatesVotes=  [
           {
             "id": 28,
             "name": "Drama",
-            "vote": 6605
+            "vote": 6605,
+            "image": null
           },
           {
               "id": 30,
@@ -185,7 +206,8 @@ const candidatesVotes=  [
           {
               "id": 31,
               "name": "Daltone Ogonda",
-              "vote": 5660
+              "vote": 5660,
+              'image': null
           },
           {
               "id": 32,
@@ -206,7 +228,8 @@ const candidatesVotes=  [
           {
             "id": 34,
             "name": "Kevin Kariuki",
-            "vote": 5110
+            "vote": 5110,
+            'image': kariuki
           },
           {
               "id": 36,
@@ -227,7 +250,8 @@ const candidatesVotes=  [
           {
             "id": 37,
             "name": "Martha Muraya",
-            "vote": 6210
+            "vote": 6210,
+            "image": null
           },
           {
               "id": 39,
@@ -248,7 +272,8 @@ const candidatesVotes=  [
         {
             "id": 73,
             "name": "Evans Kimutai",
-            "vote": 5772
+            "vote": 5772,
+            'image': kimutai
         },
         {
             "id": 74,
@@ -269,7 +294,8 @@ const candidatesVotes=  [
           {
               "id": 40,
               "name": "Timothy Olumunyak",
-              "vote": 5531
+              "vote": 5531,
+              "image": timothy
           },
           {
               "id": 41,
@@ -290,7 +316,8 @@ const candidatesVotes=  [
           {
               "id": 43,
               "name": "White Shadow Photography",
-              "vote": 6413
+              "vote": 6413,
+              "image": whiteShadow
           },
           {
               "id": 44,
@@ -311,7 +338,8 @@ const candidatesVotes=  [
           {
               "id": 46,
               "name": "Creative Ministry",
-              "vote": 5888
+              "vote": 5888,
+              "image": null
           },
           {
               "id": 47,
@@ -332,7 +360,8 @@ const candidatesVotes=  [
           {
               "id": 49,
               "name": "Tecla Barasa",
-              "vote": 6098
+              "vote": 6098,
+              "image": null
           },
           {
               "id": 50,
@@ -353,7 +382,8 @@ const candidatesVotes=  [
           {
             "id": 52,
             "name": "Yvette Kenyatta",
-            "vote": 5174
+            "vote": 5174,
+            "image": null
           },
           {
               "id": 53,
@@ -374,7 +404,8 @@ const candidatesVotes=  [
           {
               "id": 55,
               "name": "Leila Abdi",
-              "vote": 7124
+              "vote": 7124,
+              'image': abdi
           },
           {
               "id": 56,
@@ -395,7 +426,8 @@ const candidatesVotes=  [
           {
             "id": 58,
             "name": "Damaris Njeri",
-            "vote": 5723
+            "vote": 5723,
+            'image': null
           },
           {
               "id": 59,
@@ -416,7 +448,8 @@ const candidatesVotes=  [
           {
               "id": 61,
               "name": "Taekwondo",
-              "vote": 5061
+              "vote": 5061,
+              'image': taekwondo
           },
           {
             "id": 62,
@@ -480,17 +513,20 @@ const candidatesVotes=  [
           {
               "id": 71,
               "name": "Emmanuel Palimwacha",
-              "vote": 4646
+              "vote": 4646,
+              "image": palimwacha
           },
           {
               "id": 70,
               "name": "Mitchelle Ann Odhiambo",
-              "vote": 4624
+              "vote": 4624,
+              "image": null
           },
           {
               "id": 72,
               "name": "Jasper Ombaso",
-              "vote": 3198
+              "vote": 3198,
+              "image": null
           }
       ]
   },
@@ -502,123 +538,39 @@ const Votes = () => {
   const [categories, setCategories] = useState([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [countdown, setCountdown] = useState(3);
-  const [showResults, setShowResults] = useState(false);
-  const [currentAnnouncementIndex, setCurrentAnnouncementIndex] = useState(0);
-  const [showConfetti, setShowConfetti] = useState(false);
-  const [voters, setVoters] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const votersPerPage = 10;
+  const [showStage, setShowStage] = useState(0); // 0: Initial, 1: Show Top 3, 2: Show Winner
+  const [loadingWinner, setLoadingWinner] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-
-    const fetchCandidatesAndVoters = async () => {
-      try {
-        const response = await fetch(
-          "https://satuk.onrender.com/users/candidate",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const data = await response.json();
-
-        if (data.success) {
-          setVoters(data.voters.map((voter) => voter.toLowerCase()));
-        } else {
-          setError("Failed to retrieve candidates");
-        }
-      } catch (err) {
-        setError("Error fetching candidates");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCandidatesAndVoters();
+    setCategories([...candidatesVotes].reverse());
   }, []);
-
-  useEffect(() => {
-    setCategories([...candidatesVotes].reverse()); 
-  }, [candidatesVotes]);
-
-  useEffect(() => {
-    if (countdown > 0 && !showResults) {
-      const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (countdown === 0) {
-      setShowResults(true);
-      setCurrentAnnouncementIndex(0);
-    }
-  }, [countdown, showResults]);
-
-  useEffect(() => {
-    if (showResults && currentAnnouncementIndex <= 3) {
-      setShowConfetti(currentAnnouncementIndex < 3); 
-      const delay = setTimeout(() => {
-        setCurrentAnnouncementIndex((prev) => prev + 1);
-        setShowConfetti(false);
-      }, 2000);
-      return () => clearTimeout(delay);
-    }
-  }, [currentAnnouncementIndex, showResults]);
 
   const handleNextCategory = () => {
     setCurrentCategoryIndex((prevIndex) => (prevIndex + 1) % categories.length);
     setCountdown(3);
-    setShowResults(false);
-    setCurrentAnnouncementIndex(0);
+    setShowStage(0);
   };
 
-  const handlePreviousCategory = () => {
-    setCurrentCategoryIndex(
-      (prevIndex) => (prevIndex - 1 + categories.length) % categories.length
-    );
+  const handleStartCategory = () => {
     setCountdown(3);
-    setShowResults(false);
-    setCurrentAnnouncementIndex(0);
+    setShowStage(1);
   };
 
-  const downloadVoters = () => {
-    const timestamp = new Date().toLocaleString();
-    const securityToken = `Token-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`;
-
-    const voterList = [
-      `Voters List - Generated on: ${timestamp}`,
-      `Security Token: ${securityToken}`,
-      "----------------------------------------",
-      ...voters.map((voter, index) => `${index + 1}. ${voter}`),
-    ].join("\n");
-
-    const blob = new Blob([voterList], { type: "text/plain" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `voters_list_${Date.now()}.txt`;
-    link.click();
-  };
-
-  const totalPages = Math.ceil(voters.length / votersPerPage);
-  const currentVoters = voters.slice(
-    (currentPage - 1) * votersPerPage,
-    currentPage * votersPerPage
-  );
-
-  const handlePageChange = (direction) => {
-    if (direction === "next" && currentPage < totalPages) {
-      setCurrentPage((prev) => prev + 1);
-    } else if (direction === "prev" && currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
+  useEffect(() => {
+    if (countdown > 0 && showStage === 1) {
+      const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
+      return () => clearTimeout(timer);
     }
+  }, [countdown, showStage]);
+
+  const handleShowWinner = () => {
+    setLoadingWinner(true);
+    setTimeout(() => {
+      setLoadingWinner(false);
+      setShowStage(2);
+    }, 5000); // Delay before revealing the winner
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
   if (categories.length === 0) return <p>Loading categories...</p>;
 
   const currentCategory = categories[currentCategoryIndex];
@@ -630,101 +582,78 @@ const Votes = () => {
     0
   );
 
-  const confettiIntensity = [900, 700, 300];
-  const announcementTitles = ["🎉 Winner 🎉", "🥈 1st Runner-up 🥈", "🥉 2nd Runner-up 🥉"];
-
   return (
     <div className="container mx-auto my-8 px-4">
-      {showConfetti && (
-        <Confetti
-          width={window.innerWidth}
-          height={window.innerHeight}
-          numberOfPieces={confettiIntensity[currentAnnouncementIndex]}
-        />
+      <h1 className="text-3xl font-bold text-center mb-8">
+        Vote Results: {currentCategory.categoryName}
+      </h1>
+      <p className="text-lg text-center mb-4">Total Votes: {totalVotes}</p>
+
+      {showStage === 0 && (
+        <button
+          onClick={handleStartCategory}
+          className="block mx-auto px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          See Results
+        </button>
       )}
 
-      <h1 className="text-3xl font-bold text-center mb-8">Vote Results</h1>
+      {showStage === 1 && countdown > 0 && (
+        <p className="text-4xl font-bold text-center text-red-500">
+          Counting down: {countdown}
+        </p>
+      )}
 
-      <div className="category p-6 bg-white shadow-md rounded-lg text-center">
-        <h2 className="text-2xl font-semibold mb-4">
-          {currentCategory.categoryName}
-        </h2>
-        <p className="text-lg mb-4">Total Votes: {totalVotes}</p>
+      {showStage === 1 && countdown === 0 && (
+        <div className="text-center">
+          <h2 className="text-4xl font-bold text-green-600 mb-4">🥉 3rd Place</h2>
+          <p className="text-2xl">{sortedCandidates[2].name}</p>
+          <p className="text-lg">Votes: {sortedCandidates[2].vote}</p>
 
-        {showResults && currentAnnouncementIndex <= 3 ? (
-          <div className="overlay p-6 bg-white shadow-md rounded-lg text-center">
-            {currentAnnouncementIndex < 3 ? (
-              <>
-                <h2 className="text-4xl font-bold text-green-600 mb-4">
-                  {announcementTitles[currentAnnouncementIndex]}
-                </h2>
-                <p className="text-2xl font-semibold text-gray-800">
-                  {sortedCandidates[currentAnnouncementIndex].name} -{" "}
-                  {sortedCandidates[currentAnnouncementIndex].vote} votes
-                </p>
-              </>
-            ) : (
-              <ul>
-                {sortedCandidates.map((candidate, index) => (
-                  <li key={index} className="text-lg font-medium">
-                    {candidate.name}: {candidate.vote} votes
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ) : !showResults ? (
-          <p className="text-4xl font-bold text-red-500 mb-4">
-            Counting down: {countdown}
-          </p>
-        ) : null}
-      </div>
-
-      <div className="pagination mt-6 text-center">
-        <button
-          onClick={handlePreviousCategory}
-          className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 mr-4"
-        >
-          Previous Category
-        </button>
-        <button
-          onClick={handleNextCategory}
-          className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Next Category
-        </button>
-      </div>
-
-      <div className="voter-section mt-8">
-        <h2 className="text-xl font-bold mb-4">Voters</h2>
-        <ul className="list-none">
-          {currentVoters.map((voter, index) => (
-            <li key={index}>{voter}</li>
-          ))}
-        </ul>
-        <div className="pagination mt-4">
           <button
-            onClick={() => handlePageChange("prev")}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-gray-600 text-white rounded mr-4"
+            onClick={handleShowWinner}
+            className="mt-6 px-6 py-2 bg-orange-600 text-white rounded hover:bg-orange-700"
           >
-            Previous
-          </button>
-          <button
-            onClick={() => handlePageChange("next")}
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-gray-600 text-white rounded"
-          >
-            Next
+            Who's the Winner?
           </button>
         </div>
-        <button
-          onClick={downloadVoters}
-          className="px-6 py-2 bg-green-600 text-white rounded mt-4"
-        >
-          Download Voter List
-        </button>
-      </div>
+      )}
+
+      {loadingWinner && (
+        <p className="text-2xl text-center font-bold text-gray-600">
+          Determining Winner...
+        </p>
+      )}
+
+      {showStage === 2 && (
+        <div className="text-center">
+          <h2 className="text-4xl font-bold text-green-600 mb-4">🎉 Winner 🎉</h2>
+          {showStage === 2 && (
+            <Confetti width={window.innerWidth} height={window.innerHeight} />
+          )}
+          <div className="flex items-center justify-center flex-col">
+            {sortedCandidates[0].image ? (
+              <img
+                src={sortedCandidates[0].image}
+                alt={sortedCandidates[0].name}
+                className="w-40 h-40 rounded-full mb-4"
+              />
+            ) : (
+              <div className="w-40 h-40 flex items-center justify-center bg-gray-200 rounded-full mb-4">
+                <span className="text-4xl font-bold text-gray-500">🏆</span>
+              </div>
+            )}
+            <p className="text-3xl font-bold">{sortedCandidates[0].name}</p>
+            <p className="text-lg">Votes: {sortedCandidates[0].vote}</p>
+          </div>
+          <button
+            onClick={handleNextCategory}
+            className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Next Category
+          </button>
+        </div>
+      )}
     </div>
   );
 };
