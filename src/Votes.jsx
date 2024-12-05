@@ -22,6 +22,9 @@ import fsst from './images/fsst.jpg';
 import martha from './images/martha.jpg';
 import motinda from './images/mutinda.jpg';
 import tecla from './images/tecla.jpg';
+import daltone from './images/daltone.jpg';
+import joshua from './images/joshua.jpg';
+import phoebe from './images/phoebe.jpg';
 
 
 const candidatesVotes=  [
@@ -217,7 +220,7 @@ const candidatesVotes=  [
               "id": 31,
               "name": "Daltone Ogonda",
               "vote": 5660,
-              'image': null
+              'image': daltone
           },
           {
               "id": 32,
@@ -550,10 +553,12 @@ const otherAwards = [
   {
     category: "Vice Chancellor's Award",
     winner: "Phoebe Cheptoo",
+    imgae: phoebe
   },
   {
     category: "The Presidential Award",
     winner: "Joshua Praise",
+    image: joshua
   },
 ];
 
@@ -576,7 +581,7 @@ const Votes = () => {
       setCountdown(3);
       setShowStage(0);
     } else {
-      setShowStage(3); // Transition to other awards after final category
+      setShowStage(3); 
     }
   };
 
@@ -712,6 +717,11 @@ const Votes = () => {
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-4">{otherAwards[showOtherAwardIndex].category}</h1>
           <p className="text-2xl font-semibold">{otherAwards[showOtherAwardIndex].winner}</p>
+          <img
+            src={otherAwards[showOtherAwardIndex].image}
+            alt={otherAwards[showOtherAwardIndex].winner}
+            className="w-40 h-40 rounded-full mb-4"
+          />
           {showOtherAwardIndex < otherAwards.length - 1 ? (
             <button
               onClick={handleNextOtherAward}
