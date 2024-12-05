@@ -13,6 +13,9 @@ import whiteShadow from './images/White Shadow1.jpg';
 import abdi from './images/Leila Abdi.jpg';
 import taekwondo from './images/TUK Taekwondo.jpeg';
 import palimwacha from './images/Emmanuel Palimwacha.jpg';
+import hammer from './images/Tuk Hammers.jpg';
+import lawrence from './images/Lawrence Osuru.jpeg';
+
 
 const candidatesVotes=  [
 
@@ -471,7 +474,8 @@ const candidatesVotes=  [
           {
               "id": 65,
               "name": "TUK Hammers",
-              "vote": 6345
+              "vote": 6345,
+              "image": hammer
           },
           {
               "id": 64,
@@ -492,7 +496,8 @@ const candidatesVotes=  [
           {
               "id": 67,
               "name": "Lawrence Osuru",
-              "vote": 5932
+              "vote": 5932,
+              "image": lawrence
           },
           {
               "id": 68,
